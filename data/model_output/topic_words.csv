@@ -1,0 +1,401 @@
+topic_id,topic_name,word,p_topik,p_korpus
+0,Seruan Aksi dan Kritik ke Pemerintah,pemerintah,0.014837334,0.007825710802626923
+0,Seruan Aksi dan Kritik ke Pemerintah,karhutla,0.01374467,0.01831242544601308
+0,Seruan Aksi dan Kritik ke Pemerintah,kebakaran,0.010936927,0.012924875797973443
+0,Seruan Aksi dan Kritik ke Pemerintah,berita,0.007992175,0.002044909355460301
+0,Seruan Aksi dan Kritik ke Pemerintah,rakyat,0.007920437,0.005348224468126942
+0,Seruan Aksi dan Kritik ke Pemerintah,bikin,0.007903796,0.002674112234063471
+0,Seruan Aksi dan Kritik ke Pemerintah,bantu,0.007894696,0.003329531899275106
+0,Seruan Aksi dan Kritik ke Pemerintah,indonesia,0.0077128024,0.00883505708705284
+0,Seruan Aksi dan Kritik ke Pemerintah,bersuara,0.0075204205,0.0017696330960714146
+0,Seruan Aksi dan Kritik ke Pemerintah,orang,0.0066123274,0.006999882024460262
+0,Seruan Aksi dan Kritik ke Pemerintah,hutan,0.006444073,0.015035327119954906
+0,Seruan Aksi dan Kritik ke Pemerintah,liat,0.0063822875,0.002713437413976169
+0,Seruan Aksi dan Kritik ke Pemerintah,org,0.006319978,0.0021104513219814647
+0,Seruan Aksi dan Kritik ke Pemerintah,speak,0.0057795485,0.0010617798576428488
+0,Seruan Aksi dan Kritik ke Pemerintah,demo,0.005769821,0.0015861155898121567
+0,Seruan Aksi dan Kritik ke Pemerintah,peduli,0.0057214545,0.0013239477237275026
+0,Seruan Aksi dan Kritik ke Pemerintah,buzzer,0.005587835,0.0017171995228544836
+0,Seruan Aksi dan Kritik ke Pemerintah,jakarta,0.00552876,0.0012321889705978737
+0,Seruan Aksi dan Kritik ke Pemerintah,warga,0.0053259544,0.005190923748476149
+0,Seruan Aksi dan Kritik ke Pemerintah,manusia,0.005153044,0.0023857275813703514
+0,Seruan Aksi dan Kritik ke Pemerintah,repost,0.0049476475,0.0018745002425052761
+0,Seruan Aksi dan Kritik ke Pemerintah,guys,0.004938005,0.0012977309371190373
+0,Seruan Aksi dan Kritik ke Pemerintah,bencana,0.004881685,0.003421290652404735
+0,Seruan Aksi dan Kritik ke Pemerintah,hewan,0.0046903784,0.001048671464338616
+0,Seruan Aksi dan Kritik ke Pemerintah,kena,0.0045289374,0.0023070772215449554
+0,Seruan Aksi dan Kritik ke Pemerintah,pas,0.0045009204,0.0013501645103359682
+0,Seruan Aksi dan Kritik ke Pemerintah,bilang,0.004495902,0.0018351750625925781
+0,Seruan Aksi dan Kritik ke Pemerintah,kaya,0.004489522,0.0019007170291137415
+0,Seruan Aksi dan Kritik ke Pemerintah,cuman,0.0044711423,0.0008913707446878236
+0,Seruan Aksi dan Kritik ke Pemerintah,presiden,0.0043799793,0.002713437413976169
+0,Seruan Aksi dan Kritik ke Pemerintah,akun,0.0043223295,0.001048671464338616
+0,Seruan Aksi dan Kritik ke Pemerintah,kasih,0.0042496272,0.002529919907716911
+0,Seruan Aksi dan Kritik ke Pemerintah,loh,0.0038231649,0.0008258287781666601
+0,Seruan Aksi dan Kritik ke Pemerintah,postingan,0.0038161718,0.0008520455647751255
+0,Seruan Aksi dan Kritik ke Pemerintah,baca,0.0037667295,0.0008782623513835909
+0,Seruan Aksi dan Kritik ke Pemerintah,langsung,0.0037375784,0.0023070772215449554
+0,Seruan Aksi dan Kritik ke Pemerintah,kayak,0.003700601,0.0013501645103359682
+0,Seruan Aksi dan Kritik ke Pemerintah,influencer,0.0036939282,0.0006947448451243331
+0,Seruan Aksi dan Kritik ke Pemerintah,tone,0.0034805003,0.0005636609120820061
+0,Seruan Aksi dan Kritik ke Pemerintah,media,0.0034368036,0.0010748882509470814
+0,Seruan Aksi dan Kritik ke Pemerintah,jawa,0.0034268221,0.001219080577293641
+0,Seruan Aksi dan Kritik ke Pemerintah,asli,0.0034184936,0.0008651539580793582
+0,Seruan Aksi dan Kritik ke Pemerintah,deaf,0.003335823,0.0005374441254735407
+0,Seruan Aksi dan Kritik ke Pemerintah,berisik,0.003265871,0.0006816364518201004
+0,Seruan Aksi dan Kritik ke Pemerintah,video,0.0032131404,0.0018220666692883452
+0,Seruan Aksi dan Kritik ke Pemerintah,tolong,0.003072579,0.002438161154587282
+0,Seruan Aksi dan Kritik ke Pemerintah,isu,0.003064209,0.001048671464338616
+0,Seruan Aksi dan Kritik ke Pemerintah,kali,0.0030105342,0.0015467904098994587
+0,Seruan Aksi dan Kritik ke Pemerintah,anak,0.0030088776,0.00262167866084654
+0,Seruan Aksi dan Kritik ke Pemerintah,post,0.0029582982,0.0007340700250370312
+0,Seruan Aksi dan Kritik ke Pemerintah,threads,0.0028541174,0.001048671464338616
+0,Seruan Aksi dan Kritik ke Pemerintah,diam,0.0028310139,0.000786503598253962
+0,Seruan Aksi dan Kritik ke Pemerintah,kemana,0.0028274877,0.0005898776986904715
+0,Seruan Aksi dan Kritik ke Pemerintah,diem,0.002819243,0.0006029860919947042
+0,Seruan Aksi dan Kritik ke Pemerintah,share,0.002792544,0.0014419232634655971
+0,Seruan Aksi dan Kritik ke Pemerintah,kek,0.0026950731,0.001048671464338616
+0,Seruan Aksi dan Kritik ke Pemerintah,skrg,0.0026361316,0.0009831294978174525
+0,Seruan Aksi dan Kritik ke Pemerintah,korban,0.0025628388,0.0014681400500740625
+0,Seruan Aksi dan Kritik ke Pemerintah,karna,0.002512432,0.0010748882509470814
+0,Seruan Aksi dan Kritik ke Pemerintah,iya,0.0024971224,0.0012977309371190373
+0,Seruan Aksi dan Kritik ke Pemerintah,hotspot,0.002482612,0.0005374441254735407
+0,Seruan Aksi dan Kritik ke Pemerintah,disana,0.002461536,0.001966258995634905
+0,Seruan Aksi dan Kritik ke Pemerintah,serius,0.0024356479,0.0008127203848624274
+0,Seruan Aksi dan Kritik ke Pemerintah,jalan,0.002420762,0.0013239477237275026
+0,Seruan Aksi dan Kritik ke Pemerintah,nafas,0.0024085052,0.00045879376564814453
+0,Seruan Aksi dan Kritik ke Pemerintah,hati,0.0024067464,0.0013763812969444335
+0,Seruan Aksi dan Kritik ke Pemerintah,sakit,0.002383451,0.001219080577293641
+0,Seruan Aksi dan Kritik ke Pemerintah,nangis,0.0023822316,0.0006947448451243331
+0,Seruan Aksi dan Kritik ke Pemerintah,bener,0.0023487513,0.001979367388939138
+0,Seruan Aksi dan Kritik ke Pemerintah,like,0.002346991,0.0006292028786031696
+0,Seruan Aksi dan Kritik ke Pemerintah,rame,0.002339819,0.0004719021589523772
+0,Seruan Aksi dan Kritik ke Pemerintah,sungai,0.002312446,0.0004194685857354464
+0,Seruan Aksi dan Kritik ke Pemerintah,kerja,0.0023008974,0.0013501645103359682
+0,Seruan Aksi dan Kritik ke Pemerintah,tinggal,0.002288451,0.001219080577293641
+0,Seruan Aksi dan Kritik ke Pemerintah,daerah,0.0022832542,0.0022546436483280243
+0,Seruan Aksi dan Kritik ke Pemerintah,konten,0.0022456122,0.0005767693053862388
+0,Seruan Aksi dan Kritik ke Pemerintah,radit,0.0022167629,0.0005505525187777734
+0,Seruan Aksi dan Kritik ke Pemerintah,foto,0.0021993588,0.0006029860919947042
+0,Seruan Aksi dan Kritik ke Pemerintah,salah,0.0021955508,0.0016909827362460183
+0,Seruan Aksi dan Kritik ke Pemerintah,krna,0.002186438,0.0004456853723439118
+0,Seruan Aksi dan Kritik ke Pemerintah,posting,0.0021817572,0.0005767693053862388
+0,Seruan Aksi dan Kritik ke Pemerintah,lihat,0.002097779,0.0012452973639021066
+0,Seruan Aksi dan Kritik ke Pemerintah,dibilang,0.0020956576,0.000393251799126981
+0,Seruan Aksi dan Kritik ke Pemerintah,algoritma,0.0020934304,0.0006029860919947042
+0,Seruan Aksi dan Kritik ke Pemerintah,asep,0.0020809912,0.0004063601924312137
+0,Seruan Aksi dan Kritik ke Pemerintah,sedih,0.0020765692,0.0015467904098994587
+0,Seruan Aksi dan Kritik ke Pemerintah,jujur,0.0020735261,0.0005767693053862388
+0,Seruan Aksi dan Kritik ke Pemerintah,dah,0.0020580513,0.0016385491630290876
+0,Seruan Aksi dan Kritik ke Pemerintah,kemarin,0.00204171,0.0010093462844259179
+0,Seruan Aksi dan Kritik ke Pemerintah,mending,0.0020224382,0.0004063601924312137
+0,Seruan Aksi dan Kritik ke Pemerintah,ayo,0.002006166,0.0006947448451243331
+0,Seruan Aksi dan Kritik ke Pemerintah,nanya,0.0020057606,0.0003670350125185156
+0,Seruan Aksi dan Kritik ke Pemerintah,wni,0.0019743694,0.0003539266192142829
+0,Seruan Aksi dan Kritik ke Pemerintah,rakyatnya,0.001959617,0.0005374441254735407
+0,Seruan Aksi dan Kritik ke Pemerintah,sosmed,0.0019547874,0.0005767693053862388
+0,Seruan Aksi dan Kritik ke Pemerintah,info,0.0019292113,0.0008651539580793582
+0,Seruan Aksi dan Kritik ke Pemerintah,klo,0.0019190653,0.002044909355460301
+0,Seruan Aksi dan Kritik ke Pemerintah,cek,0.0018924729,0.0004719021589523772
+0,Seruan Aksi dan Kritik ke Pemerintah,beritanya,0.0018669051,0.0003801434058227483
+0,Seruan Aksi dan Kritik ke Pemerintah,utas,0.0018595163,0.000786503598253962
+1,Penyebab dan Pembakaran Sengaja,sawit,0.02523528,0.006423112719074023
+1,Penyebab dan Pembakaran Sengaja,orang,0.022744153,0.006999882024460262
+1,Penyebab dan Pembakaran Sengaja,hutan,0.020762227,0.015035327119954906
+1,Penyebab dan Pembakaran Sengaja,bakar,0.01740507,0.0045748292631772125
+1,Penyebab dan Pembakaran Sengaja,negara,0.014618275,0.004994297848912659
+1,Penyebab dan Pembakaran Sengaja,dibakar,0.012445913,0.003801434058227483
+1,Penyebab dan Pembakaran Sengaja,sengaja,0.009229286,0.0023332940081534207
+1,Penyebab dan Pembakaran Sengaja,indonesia,0.009158483,0.00883505708705284
+1,Penyebab dan Pembakaran Sengaja,pemerintah,0.009078817,0.007825710802626923
+1,Penyebab dan Pembakaran Sengaja,kalimantan,0.008481725,0.011784445580505197
+1,Penyebab dan Pembakaran Sengaja,lahan,0.00807304,0.009241417279484054
+1,Penyebab dan Pembakaran Sengaja,bang,0.0075966767,0.002674112234063471
+1,Penyebab dan Pembakaran Sengaja,malaysia,0.0075527164,0.002451269547891515
+1,Penyebab dan Pembakaran Sengaja,klo,0.0064519616,0.002044909355460301
+1,Penyebab dan Pembakaran Sengaja,pake,0.006365192,0.0018876086358095088
+1,Penyebab dan Pembakaran Sengaja,prabowo,0.0059463773,0.0026085702675423075
+1,Penyebab dan Pembakaran Sengaja,bener,0.0059275874,0.001979367388939138
+1,Penyebab dan Pembakaran Sengaja,pakai,0.0051836516,0.0015336820165952258
+1,Penyebab dan Pembakaran Sengaja,dah,0.0051620696,0.0016385491630290876
+1,Penyebab dan Pembakaran Sengaja,pejabat,0.005117626,0.0015861155898121567
+1,Penyebab dan Pembakaran Sengaja,pohon,0.0051058875,0.0013632729036402009
+1,Penyebab dan Pembakaran Sengaja,presiden,0.0050114924,0.002713437413976169
+1,Penyebab dan Pembakaran Sengaja,kena,0.004750787,0.0023070772215449554
+1,Penyebab dan Pembakaran Sengaja,liat,0.004540901,0.002713437413976169
+1,Penyebab dan Pembakaran Sengaja,kah,0.004509426,0.0012452973639021066
+1,Penyebab dan Pembakaran Sengaja,masuk,0.004305506,0.0016254407697248547
+1,Penyebab dan Pembakaran Sengaja,palembang,0.004195863,0.0011273218241640121
+1,Penyebab dan Pembakaran Sengaja,gimana,0.003991715,0.002044909355460301
+1,Penyebab dan Pembakaran Sengaja,mati,0.0039149164,0.0011928637906851757
+1,Penyebab dan Pembakaran Sengaja,terbakar,0.0039117876,0.00310668921310315
+1,Penyebab dan Pembakaran Sengaja,malu,0.0038028187,0.0007209616317327986
+1,Penyebab dan Pembakaran Sengaja,kaya,0.0037462304,0.0019007170291137415
+1,Penyebab dan Pembakaran Sengaja,pulau,0.0037038475,0.001179755397380943
+1,Penyebab dan Pembakaran Sengaja,buka,0.0036667816,0.001219080577293641
+1,Penyebab dan Pembakaran Sengaja,indo,0.0035877184,0.0008258287781666601
+1,Penyebab dan Pembakaran Sengaja,bikin,0.003530252,0.002674112234063471
+1,Penyebab dan Pembakaran Sengaja,langsung,0.0035136133,0.0023070772215449554
+1,Penyebab dan Pembakaran Sengaja,habis,0.0034552047,0.0013763812969444335
+1,Penyebab dan Pembakaran Sengaja,yaallah,0.0034543825,0.0008127203848624274
+1,Penyebab dan Pembakaran Sengaja,komen,0.003355816,0.0008520455647751255
+1,Penyebab dan Pembakaran Sengaja,beli,0.0032680228,0.0008520455647751255
+1,Penyebab dan Pembakaran Sengaja,nak,0.0032518578,0.0006685280585158678
+1,Penyebab dan Pembakaran Sengaja,kebakar,0.0032331613,0.000786503598253962
+1,Penyebab dan Pembakaran Sengaja,pembakaran,0.0032131483,0.0018220666692883452
+1,Penyebab dan Pembakaran Sengaja,bibit,0.003203017,0.0009831294978174525
+1,Penyebab dan Pembakaran Sengaja,bilang,0.0031949526,0.0018351750625925781
+1,Penyebab dan Pembakaran Sengaja,jahat,0.0031465008,0.0009044791379920563
+1,Penyebab dan Pembakaran Sengaja,tanam,0.0030938226,0.0007996119915581947
+1,Penyebab dan Pembakaran Sengaja,membakar,0.0030477406,0.0015992239831163894
+1,Penyebab dan Pembakaran Sengaja,papua,0.003023065,0.008730189940618978
+1,Penyebab dan Pembakaran Sengaja,rakyat,0.002996504,0.005348224468126942
+1,Penyebab dan Pembakaran Sengaja,doang,0.0029176997,0.0007602868116454966
+1,Penyebab dan Pembakaran Sengaja,hidup,0.0028881954,0.002189101681806861
+1,Penyebab dan Pembakaran Sengaja,gila,0.0028820592,0.0008520455647751255
+1,Penyebab dan Pembakaran Sengaja,jerebu,0.0028548574,0.0006816364518201004
+1,Penyebab dan Pembakaran Sengaja,wowo,0.0028257396,0.0008520455647751255
+1,Penyebab dan Pembakaran Sengaja,salah,0.0027629617,0.0016909827362460183
+1,Penyebab dan Pembakaran Sengaja,suka,0.0027495555,0.0006685280585158678
+1,Penyebab dan Pembakaran Sengaja,iya,0.0027376057,0.0012977309371190373
+1,Penyebab dan Pembakaran Sengaja,coba,0.0025897631,0.0011535386107724777
+1,Penyebab dan Pembakaran Sengaja,jgn,0.002515545,0.0009831294978174525
+1,Penyebab dan Pembakaran Sengaja,sdh,0.0025071476,0.0011535386107724777
+1,Penyebab dan Pembakaran Sengaja,masker,0.0024868601,0.0010093462844259179
+1,Penyebab dan Pembakaran Sengaja,kebun,0.0024028996,0.0004981189455608426
+1,Penyebab dan Pembakaran Sengaja,kayak,0.002393166,0.0013501645103359682
+1,Penyebab dan Pembakaran Sengaja,uda,0.0023877341,0.0006947448451243331
+1,Penyebab dan Pembakaran Sengaja,tolong,0.0023692958,0.002438161154587282
+1,Penyebab dan Pembakaran Sengaja,sedih,0.002336831,0.0015467904098994587
+1,Penyebab dan Pembakaran Sengaja,kali,0.002333918,0.0015467904098994587
+1,Penyebab dan Pembakaran Sengaja,perusahaan,0.0023071289,0.002267752041632257
+1,Penyebab dan Pembakaran Sengaja,beneran,0.0022894528,0.0007471784183412639
+1,Penyebab dan Pembakaran Sengaja,tinggal,0.0022826982,0.001219080577293641
+1,Penyebab dan Pembakaran Sengaja,org,0.0022799524,0.0021104513219814647
+1,Penyebab dan Pembakaran Sengaja,rezim,0.002271968,0.0010355630710343832
+1,Penyebab dan Pembakaran Sengaja,jawa,0.0022187547,0.001219080577293641
+1,Penyebab dan Pembakaran Sengaja,pengen,0.002172168,0.000524335732169308
+1,Penyebab dan Pembakaran Sengaja,manusia,0.0021465658,0.0023857275813703514
+1,Penyebab dan Pembakaran Sengaja,tetangga,0.0021438443,0.0007471784183412639
+1,Penyebab dan Pembakaran Sengaja,karna,0.0020841472,0.0010748882509470814
+1,Penyebab dan Pembakaran Sengaja,mata,0.0020827833,0.001179755397380943
+1,Penyebab dan Pembakaran Sengaja,dimana,0.0020626849,0.0007602868116454966
+1,Penyebab dan Pembakaran Sengaja,rumah,0.00204363,0.0023332940081534207
+1,Penyebab dan Pembakaran Sengaja,alam,0.0020296795,0.0022939688282407225
+1,Penyebab dan Pembakaran Sengaja,blm,0.0020107124,0.0004719021589523772
+1,Penyebab dan Pembakaran Sengaja,sampah,0.0020104398,0.0006685280585158678
+1,Penyebab dan Pembakaran Sengaja,lihat,0.0019999726,0.0012452973639021066
+1,Penyebab dan Pembakaran Sengaja,takut,0.0019878168,0.0008520455647751255
+1,Penyebab dan Pembakaran Sengaja,karhutla,0.0019820963,0.01831242544601308
+1,Penyebab dan Pembakaran Sengaja,story,0.001979835,0.0006292028786031696
+1,Penyebab dan Pembakaran Sengaja,sabar,0.001966053,0.0004456853723439118
+1,Penyebab dan Pembakaran Sengaja,warga,0.001948193,0.005190923748476149
+1,Penyebab dan Pembakaran Sengaja,makan,0.0019407783,0.0006816364518201004
+1,Penyebab dan Pembakaran Sengaja,mas,0.0019386886,0.0007078532384285658
+1,Penyebab dan Pembakaran Sengaja,dunia,0.0019192124,0.00131083933042327
+1,Penyebab dan Pembakaran Sengaja,kyk,0.0019095422,0.0004325769790396791
+1,Penyebab dan Pembakaran Sengaja,otak,0.0019078722,0.00045879376564814453
+1,Penyebab dan Pembakaran Sengaja,neraka,0.0018862857,0.0008389371714708928
+1,Penyebab dan Pembakaran Sengaja,bantuan,0.0018796569,0.0015205736232909931
+1,Penyebab dan Pembakaran Sengaja,hasil,0.0018394409,0.0008127203848624274
+1,Penyebab dan Pembakaran Sengaja,tanah,0.001814675,0.0018613918492010435
+2,Doa dan Dukungan untuk Warga,allah,0.053029202,0.010014812484433783
+2,Doa dan Dukungan untuk Warga,semoga,0.048362296,0.009529801932177173
+2,Doa dan Dukungan untuk Warga,hujan,0.029253084,0.006029860919947042
+2,Doa dan Dukungan untuk Warga,kalimantan,0.019620813,0.011784445580505197
+2,Doa dan Dukungan untuk Warga,sehat,0.010610637,0.002228426861719559
+2,Doa dan Dukungan untuk Warga,tuhan,0.00955901,0.0018220666692883452
+2,Doa dan Dukungan untuk Warga,turun,0.008392684,0.0028707381336269613
+2,Doa dan Dukungan untuk Warga,api,0.008175426,0.007209616317327985
+2,Doa dan Dukungan untuk Warga,indonesia,0.0076279896,0.00883505708705284
+2,Doa dan Dukungan untuk Warga,padam,0.0075666765,0.0022022100751110936
+2,Doa dan Dukungan untuk Warga,cepat,0.0072734305,0.001704091129550251
+2,Doa dan Dukungan untuk Warga,disana,0.006823115,0.001966258995634905
+2,Doa dan Dukungan untuk Warga,stay,0.0067304485,0.0013632729036402009
+2,Doa dan Dukungan untuk Warga,bantu,0.0066623744,0.003329531899275106
+2,Doa dan Dukungan untuk Warga,doa,0.0064840405,0.001219080577293641
+2,Doa dan Dukungan untuk Warga,teman,0.006471543,0.0021104513219814647
+2,Doa dan Dukungan untuk Warga,kasih,0.0063159764,0.002529919907716911
+2,Doa dan Dukungan untuk Warga,izin,0.0058817863,0.0018613918492010435
+2,Doa dan Dukungan untuk Warga,please,0.0057025407,0.0012977309371190373
+2,Doa dan Dukungan untuk Warga,turunkan,0.005701612,0.0011928637906851757
+2,Doa dan Dukungan untuk Warga,tolong,0.0056490637,0.002438161154587282
+2,Doa dan Dukungan untuk Warga,terima,0.0055764182,0.0015205736232909931
+2,Doa dan Dukungan untuk Warga,membaik,0.00519003,0.0010355630710343832
+2,Doa dan Dukungan untuk Warga,air,0.0051558386,0.002674112234063471
+2,Doa dan Dukungan untuk Warga,safe,0.005096982,0.0010748882509470814
+2,Doa dan Dukungan untuk Warga,lekas,0.005083198,0.0009831294978174525
+2,Doa dan Dukungan untuk Warga,papua,0.004741527,0.008730189940618978
+2,Doa dan Dukungan untuk Warga,fire,0.0046933047,0.0007733952049497294
+2,Doa dan Dukungan untuk Warga,alhamdulillah,0.0045032967,0.0009700211045132199
+2,Doa dan Dukungan untuk Warga,raya,0.0044350163,0.0008913707446878236
+2,Doa dan Dukungan untuk Warga,terimakasih,0.0044171265,0.0009438043179047544
+2,Doa dan Dukungan untuk Warga,warga,0.0041994234,0.005190923748476149
+2,Doa dan Dukungan untuk Warga,hati,0.004186186,0.0013763812969444335
+2,Doa dan Dukungan untuk Warga,gimana,0.004063435,0.002044909355460301
+2,Doa dan Dukungan untuk Warga,saudara,0.0040311962,0.0010093462844259179
+2,Doa dan Dukungan untuk Warga,help,0.0039568106,0.0008913707446878236
+2,Doa dan Dukungan untuk Warga,mohon,0.0038711585,0.0008913707446878236
+2,Doa dan Dukungan untuk Warga,bang,0.0037839122,0.002674112234063471
+2,Doa dan Dukungan untuk Warga,donasi,0.0037302831,0.0008782623513835909
+2,Doa dan Dukungan untuk Warga,share,0.003694105,0.0014419232634655971
+2,Doa dan Dukungan untuk Warga,relawan,0.0036185642,0.0021104513219814647
+2,Doa dan Dukungan untuk Warga,daerah,0.0035788582,0.0022546436483280243
+2,Doa dan Dukungan untuk Warga,alam,0.0034957577,0.0022939688282407225
+2,Doa dan Dukungan untuk Warga,kebakaran,0.0034462183,0.012924875797973443
+2,Doa dan Dukungan untuk Warga,kota,0.0033615138,0.0009044791379920563
+2,Doa dan Dukungan untuk Warga,palangka,0.0033481687,0.0007471784183412639
+2,Doa dan Dukungan untuk Warga,deras,0.0033008035,0.0007078532384285658
+2,Doa dan Dukungan untuk Warga,karhutla,0.003176042,0.01831242544601308
+2,Doa dan Dukungan untuk Warga,semangat,0.003147459,0.0009306959246005217
+2,Doa dan Dukungan untuk Warga,save,0.0031384935,0.0009306959246005217
+2,Doa dan Dukungan untuk Warga,pulih,0.0031346262,0.0006947448451243331
+2,Doa dan Dukungan untuk Warga,lindungi,0.0031303598,0.0005767693053862388
+2,Doa dan Dukungan untuk Warga,jaga,0.0030956834,0.0010748882509470814
+2,Doa dan Dukungan untuk Warga,langit,0.0030684408,0.0014025980835528989
+2,Doa dan Dukungan untuk Warga,memadamkan,0.0030034166,0.001612332376420622
+2,Doa dan Dukungan untuk Warga,repost,0.0029879832,0.0018745002425052761
+2,Doa dan Dukungan untuk Warga,sedih,0.0029369274,0.0015467904098994587
+2,Doa dan Dukungan untuk Warga,musibah,0.0028842764,0.0005374441254735407
+2,Doa dan Dukungan untuk Warga,keluarga,0.0028640311,0.0008782623513835909
+2,Doa dan Dukungan untuk Warga,rabb,0.002860834,0.0005636609120820061
+2,Doa dan Dukungan untuk Warga,forest,0.002856104,0.000655419665211635
+2,Doa dan Dukungan untuk Warga,anak,0.0028541735,0.00262167866084654
+2,Doa dan Dukungan untuk Warga,rumah,0.0028239007,0.0023332940081534207
+2,Doa dan Dukungan untuk Warga,palangkaraya,0.0027510703,0.000655419665211635
+2,Doa dan Dukungan untuk Warga,sakit,0.0026652275,0.001219080577293641
+2,Doa dan Dukungan untuk Warga,asap,0.002585435,0.009700211045132199
+2,Doa dan Dukungan untuk Warga,pahlawan,0.0025256418,0.0008258287781666601
+2,Doa dan Dukungan untuk Warga,azab,0.0025022998,0.0004719021589523772
+2,Doa dan Dukungan untuk Warga,berdoa,0.0025007406,0.0004456853723439118
+2,Doa dan Dukungan untuk Warga,neraka,0.0024959308,0.0008389371714708928
+2,Doa dan Dukungan untuk Warga,kebaikan,0.0024919382,0.0005112273388650753
+2,Doa dan Dukungan untuk Warga,dunia,0.0024271403,0.00131083933042327
+2,Doa dan Dukungan untuk Warga,world,0.0024187595,0.0006160944852989369
+2,Doa dan Dukungan untuk Warga,astaghfirullah,0.002376412,0.0004325769790396791
+2,Doa dan Dukungan untuk Warga,fires,0.0023252964,0.0004719021589523772
+2,Doa dan Dukungan untuk Warga,terdampak,0.0023036266,0.0017303079161587163
+2,Doa dan Dukungan untuk Warga,cepet,0.0022746306,0.0006685280585158678
+2,Doa dan Dukungan untuk Warga,maaf,0.0022716073,0.001219080577293641
+2,Doa dan Dukungan untuk Warga,mendoakan,0.0022606442,0.0004456853723439118
+2,Doa dan Dukungan untuk Warga,sehat2,0.0022574272,0.00045879376564814453
+2,Doa dan Dukungan untuk Warga,jabbar,0.002254013,0.0003801434058227483
+2,Doa dan Dukungan untuk Warga,salam,0.0022004184,0.0006160944852989369
+2,Doa dan Dukungan untuk Warga,akhirat,0.0021955706,0.0004456853723439118
+2,Doa dan Dukungan untuk Warga,sdh,0.0021680917,0.0011535386107724777
+2,Doa dan Dukungan untuk Warga,membakar,0.002158425,0.0015992239831163894
+2,Doa dan Dukungan untuk Warga,bantuan,0.0021578064,0.0015205736232909931
+2,Doa dan Dukungan untuk Warga,kawan,0.0021525398,0.0006029860919947042
+2,Doa dan Dukungan untuk Warga,kasian,0.0021395918,0.0006029860919947042
+2,Doa dan Dukungan untuk Warga,people,0.0021381888,0.0005636609120820061
+2,Doa dan Dukungan untuk Warga,kasihan,0.002130611,0.0004325769790396791
+2,Doa dan Dukungan untuk Warga,pagi,0.002092848,0.001219080577293641
+2,Doa dan Dukungan untuk Warga,berjuang,0.002090819,0.0009700211045132199
+2,Doa dan Dukungan untuk Warga,aman,0.0020886855,0.0009700211045132199
+2,Doa dan Dukungan untuk Warga,bumi,0.002072145,0.0009175875312962891
+2,Doa dan Dukungan untuk Warga,government,0.0020532396,0.0004456853723439118
+2,Doa dan Dukungan untuk Warga,kaa,0.002007896,0.0004194685857354464
+2,Doa dan Dukungan untuk Warga,purifier,0.002007848,0.0003801434058227483
+2,Doa dan Dukungan untuk Warga,berkah,0.0020008641,0.00045879376564814453
+2,Doa dan Dukungan untuk Warga,smoga,0.0019959973,0.000393251799126981
+2,Doa dan Dukungan untuk Warga,makhluk,0.001982416,0.0004063601924312137
+3,Laporan Kejadian dan Kabut Asap,karhutla,0.035567164,0.01831242544601308
+3,Laporan Kejadian dan Kabut Asap,kebakaran,0.028298886,0.012924875797973443
+3,Laporan Kejadian dan Kabut Asap,asap,0.025941454,0.009700211045132199
+3,Laporan Kejadian dan Kabut Asap,hutan,0.022590889,0.015035327119954906
+3,Laporan Kejadian dan Kabut Asap,lahan,0.02161558,0.009241417279484054
+3,Laporan Kejadian dan Kabut Asap,kalimantan,0.017511649,0.011784445580505197
+3,Laporan Kejadian dan Kabut Asap,api,0.015319982,0.007209616317327985
+3,Laporan Kejadian dan Kabut Asap,papua,0.0135804955,0.008730189940618978
+3,Laporan Kejadian dan Kabut Asap,kabut,0.00922782,0.0030804724264946845
+3,Laporan Kejadian dan Kabut Asap,indonesia,0.0088828495,0.00883505708705284
+3,Laporan Kejadian dan Kabut Asap,warga,0.007619931,0.005190923748476149
+3,Laporan Kejadian dan Kabut Asap,udara,0.0075786854,0.0027920877738015653
+3,Laporan Kejadian dan Kabut Asap,pemerintah,0.0072549316,0.007825710802626923
+3,Laporan Kejadian dan Kabut Asap,titik,0.007138267,0.0026478954474550053
+3,Laporan Kejadian dan Kabut Asap,rakyat,0.0070981877,0.005348224468126942
+3,Laporan Kejadian dan Kabut Asap,bencana,0.006173295,0.003421290652404735
+3,Laporan Kejadian dan Kabut Asap,selatan,0.0058035566,0.0024774863344999803
+3,Laporan Kejadian dan Kabut Asap,terbakar,0.0058024093,0.00310668921310315
+3,Laporan Kejadian dan Kabut Asap,masyarakat,0.005647668,0.002438161154587282
+3,Laporan Kejadian dan Kabut Asap,air,0.005120937,0.002674112234063471
+3,Laporan Kejadian dan Kabut Asap,perusahaan,0.0049771895,0.002267752041632257
+3,Laporan Kejadian dan Kabut Asap,kondisi,0.0044275695,0.0020186925688518357
+3,Laporan Kejadian dan Kabut Asap,penanganan,0.004414179,0.0016909827362460183
+3,Laporan Kejadian dan Kabut Asap,gambut,0.0042514876,0.0013239477237275026
+3,Laporan Kejadian dan Kabut Asap,nasional,0.0040965877,0.0019924757822433704
+3,Laporan Kejadian dan Kabut Asap,negara,0.0040193168,0.004994297848912659
+3,Laporan Kejadian dan Kabut Asap,wilayah,0.003973387,0.0017696330960714146
+3,Laporan Kejadian dan Kabut Asap,oktober,0.0036534155,0.0014025980835528989
+3,Laporan Kejadian dan Kabut Asap,sumatera,0.0036494061,0.0013370561170317355
+3,Laporan Kejadian dan Kabut Asap,lingkungan,0.0034301062,0.0012846225438148046
+3,Laporan Kejadian dan Kabut Asap,anak,0.0033950678,0.00262167866084654
+3,Laporan Kejadian dan Kabut Asap,hukum,0.0033876982,0.0010879966442513141
+3,Laporan Kejadian dan Kabut Asap,pemadaman,0.0032170506,0.0011273218241640121
+3,Laporan Kejadian dan Kabut Asap,relawan,0.002997991,0.0021104513219814647
+3,Laporan Kejadian dan Kabut Asap,tanah,0.0029512276,0.0018613918492010435
+3,Laporan Kejadian dan Kabut Asap,akibat,0.002922679,0.0011535386107724777
+3,Laporan Kejadian dan Kabut Asap,singapura,0.0028243863,0.0010879966442513141
+3,Laporan Kejadian dan Kabut Asap,parah,0.0027657943,0.0014943568366825278
+3,Laporan Kejadian dan Kabut Asap,hektare,0.0027065207,0.0011011050375555468
+3,Laporan Kejadian dan Kabut Asap,terdampak,0.0026906778,0.0017303079161587163
+3,Laporan Kejadian dan Kabut Asap,lapangan,0.0026847895,0.0009831294978174525
+3,Laporan Kejadian dan Kabut Asap,memadamkan,0.0026836274,0.001612332376420622
+3,Laporan Kejadian dan Kabut Asap,luas,0.0026715745,0.0009438043179047544
+3,Laporan Kejadian dan Kabut Asap,pemadam,0.0026417526,0.0010093462844259179
+3,Laporan Kejadian dan Kabut Asap,data,0.0026221059,0.0010879966442513141
+3,Laporan Kejadian dan Kabut Asap,asapnya,0.0026203694,0.0011273218241640121
+3,Laporan Kejadian dan Kabut Asap,pembakaran,0.0025703085,0.0018220666692883452
+3,Laporan Kejadian dan Kabut Asap,rumah,0.0025701567,0.0023332940081534207
+3,Laporan Kejadian dan Kabut Asap,daerah,0.002522512,0.0022546436483280243
+3,Laporan Kejadian dan Kabut Asap,lokasi,0.002510799,0.0011011050375555468
+3,Laporan Kejadian dan Kabut Asap,turun,0.0025090843,0.0028707381336269613
+3,Laporan Kejadian dan Kabut Asap,hidup,0.0024834217,0.002189101681806861
+3,Laporan Kejadian dan Kabut Asap,malaysia,0.0024379173,0.002451269547891515
+3,Laporan Kejadian dan Kabut Asap,kabupaten,0.0024356428,0.0009175875312962891
+3,Laporan Kejadian dan Kabut Asap,panas,0.0024196682,0.0011142134308597795
+3,Laporan Kejadian dan Kabut Asap,sumber,0.0023629784,0.0010093462844259179
+3,Laporan Kejadian dan Kabut Asap,solusi,0.0023584643,0.0010224546777301505
+3,Laporan Kejadian dan Kabut Asap,malam,0.002356991,0.0010748882509470814
+3,Laporan Kejadian dan Kabut Asap,kawasan,0.0023173182,0.0009700211045132199
+3,Laporan Kejadian dan Kabut Asap,alam,0.0023162388,0.0022939688282407225
+3,Laporan Kejadian dan Kabut Asap,tebal,0.0023123564,0.0007340700250370312
+3,Laporan Kejadian dan Kabut Asap,merauke,0.0022572305,0.001140430217468245
+3,Laporan Kejadian dan Kabut Asap,provinsi,0.002234351,0.0008520455647751255
+3,Laporan Kejadian dan Kabut Asap,cuaca,0.0022008882,0.0007733952049497294
+3,Laporan Kejadian dan Kabut Asap,sibuk,0.0021752492,0.0007471784183412639
+3,Laporan Kejadian dan Kabut Asap,membantu,0.0021511526,0.0009831294978174525
+3,Laporan Kejadian dan Kabut Asap,perhatian,0.0021263007,0.0008651539580793582
+3,Laporan Kejadian dan Kabut Asap,bersih,0.00212248,0.0010224546777301505
+3,Laporan Kejadian dan Kabut Asap,riau,0.0020668022,0.0008258287781666601
+3,Laporan Kejadian dan Kabut Asap,informasi,0.0019859038,0.0007340700250370312
+3,Laporan Kejadian dan Kabut Asap,paru,0.0019750923,0.0006685280585158678
+3,Laporan Kejadian dan Kabut Asap,islam,0.00196472,0.0010355630710343832
+3,Laporan Kejadian dan Kabut Asap,jalan,0.0019547127,0.0013239477237275026
+3,Laporan Kejadian dan Kabut Asap,area,0.0019366669,0.0008913707446878236
+3,Laporan Kejadian dan Kabut Asap,korporasi,0.0019058115,0.000786503598253962
+3,Laporan Kejadian dan Kabut Asap,butuh,0.0018981525,0.0010617798576428488
+3,Laporan Kejadian dan Kabut Asap,teman,0.0018965119,0.0021104513219814647
+3,Laporan Kejadian dan Kabut Asap,dampak,0.0018940682,0.0008258287781666601
+3,Laporan Kejadian dan Kabut Asap,update,0.0018939843,0.0010617798576428488
+3,Laporan Kejadian dan Kabut Asap,nyata,0.0018874471,0.0007078532384285658
+3,Laporan Kejadian dan Kabut Asap,barat,0.0018684285,0.0007078532384285658
+3,Laporan Kejadian dan Kabut Asap,prabowo,0.0018459052,0.0026085702675423075
+3,Laporan Kejadian dan Kabut Asap,pagi,0.0018393245,0.001219080577293641
+3,Laporan Kejadian dan Kabut Asap,meluas,0.0018323336,0.0007602868116454966
+3,Laporan Kejadian dan Kabut Asap,petugas,0.0017932825,0.0007996119915581947
+3,Laporan Kejadian dan Kabut Asap,langsung,0.0017766644,0.0023070772215449554
+3,Laporan Kejadian dan Kabut Asap,kesehatan,0.0017589896,0.0009831294978174525
+3,Laporan Kejadian dan Kabut Asap,juta,0.0017582064,0.0006423112719074023
+3,Laporan Kejadian dan Kabut Asap,kalteng,0.0017531367,0.0008258287781666601
+3,Laporan Kejadian dan Kabut Asap,bantuan,0.0017411007,0.0015205736232909931
+3,Laporan Kejadian dan Kabut Asap,kualitas,0.0017362616,0.0006160944852989369
+3,Laporan Kejadian dan Kabut Asap,menghirup,0.0017277043,0.0006160944852989369
+3,Laporan Kejadian dan Kabut Asap,sistem,0.0017078719,0.0007733952049497294
+3,Laporan Kejadian dan Kabut Asap,konsesi,0.0017066146,0.0005767693053862388
+3,Laporan Kejadian dan Kabut Asap,timur,0.0016967779,0.0007340700250370312
+3,Laporan Kejadian dan Kabut Asap,video,0.0016928159,0.0018220666692883452
+3,Laporan Kejadian dan Kabut Asap,tim,0.0016576074,0.0008389371714708928
+3,Laporan Kejadian dan Kabut Asap,tni,0.0016444958,0.0005505525187777734
+3,Laporan Kejadian dan Kabut Asap,kering,0.0016406022,0.0005898776986904715
+3,Laporan Kejadian dan Kabut Asap,presiden,0.0016153866,0.002713437413976169

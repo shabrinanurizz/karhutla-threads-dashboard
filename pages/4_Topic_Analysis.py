@@ -2,42 +2,43 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+from pathlib import Path
 
 st.set_page_config(page_title="Analisis Topik", layout="wide")
 
-# ---------- DATA DUMMY (nanti diganti CSV hasil model) ----------
-rng = np.random.default_rng(42)
-topik = ["Dampak Asap", "Kebakaran Lahan", "Penanganan"]
-tanggal = pd.date_range("2026-08-02", "2026-08-31")
-komentar = pd.DataFrame({
-    "tanggal": rng.choice(tanggal, 500),
-    "topic_name": rng.choice(topik, 500, p=[0.4, 0.35, 0.25]),
-    "likes": rng.integers(0, 50, 500),
-    "shares": rng.integers(0, 10, 500),
-    "replies": rng.integers(0, 15, 500),
-})
-kata = pd.DataFrame({
-    "topic_name": ["Dampak Asap"] * 5 + ["Kebakaran Lahan"] * 5 + ["Penanganan"] * 5,
-    "word": ["asap", "sesak", "masker", "ispa", "yang",
-             "lahan", "bakar", "sawit", "gambut", "yang",
-             "pemadam", "hujan", "bantuan", "tim", "yang"],
-    "p_topik": [0.08, 0.04, 0.035, 0.03, 0.06,
-                0.07, 0.06, 0.04, 0.03, 0.055,
-                0.05, 0.04, 0.035, 0.03, 0.05],
-    "p_korpus": [0.05, 0.01, 0.008, 0.004, 0.07,
-                 0.04, 0.03, 0.01, 0.006, 0.07,
-                 0.01, 0.012, 0.01, 0.01, 0.07],
-})
+# ---------- MUAT DATA ----------
+DATA = Path(__file__).resolve().parent.parent / "data"
+FILE_KOMENTAR = DATA / "raw" / "data karhutla gabungan terbaru.csv"   # <- ganti ke data final nanti
+
+@st.cache_data
+def muat_data():
+    asg = pd.read_csv(DATA / "model_output" / "topic_assignments.csv")
+    kata = pd.read_csv(DATA / "model_output" / "topic_words.csv")
+    metrics = pd.read_csv(DATA / "model_output" / "topic_metrics.csv")
+    raw = pd.read_csv(FILE_KOMENTAR).rename(columns={
+        "comment_code": "comment_id", "like_count": "likes", "reply_count": "replies"})
+    komentar = asg.merge(raw[["comment_id", "tanggal", "likes", "replies"]],
+                         on="comment_id", how="left")
+    komentar["tanggal"] = pd.to_datetime(komentar["tanggal"])
+    return komentar, kata, metrics
+
+try:
+    komentar, kata, metrics = muat_data()
+except FileNotFoundError as e:
+    st.error(f"File data tidak ditemukan: {e.filename}")
+    st.stop()
+
+topik = kata.drop_duplicates("topic_id").sort_values("topic_id")["topic_name"].tolist()
 
 # ---------- GAYA ----------
-WARNA = {"Dampak Asap": "#4C78A8", "Kebakaran Lahan": "#E45756", "Penanganan": "#54A24B"}
+PALET = ["#4C78A8", "#E45756", "#54A24B", "#F58518", "#B279A2", "#72B7B2"]
+WARNA = dict(zip(topik, PALET))
 
 def rapikan(fig, tinggi=320):
     fig.update_layout(height=tinggi, margin=dict(l=10, r=10, t=50, b=10),
                       legend_title_text="")
     return fig
 
-# ---------- HEADER (dipadatkan) ----------
 st.markdown("""
 <style>
 .block-container {padding-top: 1.2rem; padding-bottom: 0.5rem;}
@@ -56,29 +57,33 @@ with tab1:
         fig = px.pie(proporsi, names="topik", values="jumlah", hole=0.45,
                      color="topik", color_discrete_map=WARNA,
                      title="Proporsi Komentar per Topik")
-        st.plotly_chart(rapikan(fig, 400), use_container_width=True)
+        st.plotly_chart(rapikan(fig, 420), use_container_width=True)
     with kanan:
-        st.metric("Coherence Score", "0.52", border=True)  # dummy
-        st.metric("Jumlah Topik", len(topik), border=True)
+        skor = metrics.loc[metrics["jumlah_topik"] == len(topik), "coherence"].iloc[0]
+        st.metric(f"Coherence Score (K = {len(topik)})", round(skor, 3), border=True)
         st.metric("Total Komentar", len(komentar), border=True)
+        with st.container(border=True):
+            fig = px.line(metrics, x="jumlah_topik", y="coherence", markers=True,
+                          title="Coherence per Jumlah Topik",
+                          labels={"jumlah_topik": "Jumlah topik", "coherence": "Coherence"})
+            st.plotly_chart(rapikan(fig, 230), use_container_width=True)
 
 # ---------- TAB 2 ----------
 def tampil_topik(nama):
     with st.container(border=True):
         st.markdown(f"**{nama}**")
         d = komentar[komentar["topic_name"] == nama]
-        k = st.columns(4)
+        k = st.columns(3)
         k[0].metric("Komentar", len(d))
-        k[1].metric("Likes", round(d["likes"].mean(), 1))
-        k[2].metric("Shares", round(d["shares"].mean(), 1))
-        k[3].metric("Replies", round(d["replies"].mean(), 1))
+        k[1].metric("Rata2 Likes", round(d["likes"].mean(), 1))
+        k[2].metric("Rata2 Replies", round(d["replies"].mean(), 1))
 
         w = kata[kata["topic_name"] == nama].copy()
         rel = lam * np.log(w["p_topik"]) + (1 - lam) * np.log(w["p_topik"] / w["p_korpus"])
         w["skor"] = (rel - rel.min()) / (rel.max() - rel.min() + 1e-9)
-        w = w.sort_values("skor")
+        w = w.nlargest(10, "skor").sort_values("skor")
         fig = px.bar(w, x="skor", y="word", orientation="h",
-                     title="Top Kata", labels={"skor": "Skor relevansi", "word": ""})
+                     title="Top 10 Kata", labels={"skor": "Skor relevansi", "word": ""})
         fig.update_traces(marker_color=WARNA[nama])
         st.plotly_chart(rapikan(fig, 250), use_container_width=True)
 
@@ -97,6 +102,7 @@ with tab2:
     with kolTS:
         with st.container(border=True):
             ts = (komentar[komentar["topic_name"].isin([topik_a, topik_b])]
+                  .dropna(subset=["tanggal"])
                   .groupby(["tanggal", "topic_name"]).size().reset_index(name="jumlah"))
             fig = px.line(ts, x="tanggal", y="jumlah", color="topic_name",
                           color_discrete_map=WARNA, title="Komentar per Hari",
