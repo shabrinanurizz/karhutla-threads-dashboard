@@ -1,6 +1,36 @@
+
+# Virtual Environment
+.venv/
 venv/
+env/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# Streamlit Secrets
+.streamlit/secrets.toml
+
+# Python Cache
 __pycache__/
-.ipynb_checkpoints/
-coba.py
+*.py[cod]
+
+# IDE & Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data & notebooks
+data/*.csv
+data/*.xlsx
+data/*.xls
 data/raw/
 data/processed/
+.ipynb_checkpoints/
+
+# File lokal
+coba.py
