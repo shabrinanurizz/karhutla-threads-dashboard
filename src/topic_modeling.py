@@ -22,18 +22,21 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "model_output"
+from src import config
+from src.visualization import render_page_title
 
-# Palet warna topik (hijau tua, oranye, amber, hijau gelap, cadangan)
-PALET = ["#2D6A4F", "#E76F1A", "#F4A025", "#1A3A2A", "#B279A2", "#72B7B2"]
+DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "model_output"
 TOP_N = 8
 
-# Warna grup KPI (sesuai desain)
+# Warna topik dari palet global (urutan: hijau tua, oranye-merah, amber, emas, ...)
+PALET = config.CHART_COLORWAY
+
+# Warna grup KPI — 4 warna berbeda dari config.COLORS
 _KPI = {
-    "komentar": "#1B4D2E",
-    "likes":    "#C85A1A",
-    "replies":  "#E8A020",
-    "shares":   "#0D2318",
+    "komentar": config.COLORS["green_dark"],   # #1B4332
+    "likes":    config.COLORS["red_orange"],   # #D94A05
+    "replies":  config.COLORS["amber"],        # #F58E0A
+    "shares":   config.COLORS["orange"],       # #E85D10
 }
 
 
@@ -98,6 +101,19 @@ def ringkasan_topik(gabung, nama_topik):
 
 
 # ---------- HELPER RENDER ----------
+def _tema_fig(fig, height, margin=None):
+    """Terapkan tema global (latar transparan, teks gelap) ke figure Plotly."""
+    fig.update_layout(
+        paper_bgcolor=config.CHART["paper_bgcolor"],
+        plot_bgcolor=config.CHART["plot_bgcolor"],
+        font={"family": config.CHART["font_family"],
+              "color": config.CHART["font_color"]},
+        height=height,
+        margin=margin or dict(l=5, r=5, t=36, b=5),
+    )
+    return fig
+
+
 def _kpi_grup(col, label, warna, nama_a, val_a, nama_b, val_b):
     """Render satu grup KPI (header + 2 value box) ke dalam kolom Streamlit."""
     col.markdown(f"""
@@ -128,13 +144,12 @@ def _bar_kata(words, comparison, topic_id, lam, nama, warna_bar):
                  labels={"skor": "", "word": ""})
     fig.update_traces(marker_color=warna_bar)
     fig.update_layout(
-        height=220,
-        margin=dict(l=5, r=5, t=34, b=5),
         xaxis=dict(showticklabels=False),
-        yaxis=dict(tickfont=dict(size=11)),
-        title_font=dict(size=12),
+        yaxis=dict(tickfont=dict(size=11,
+                                 color=config.CHART["font_color"])),
+        title_font=dict(size=12, color=config.CHART["font_color"]),
     )
-    return fig
+    return _tema_fig(fig, height=220)
 
 
 # ---------- TAMPILAN UTAMA ----------
@@ -153,29 +168,17 @@ def show_topic_analysis(data, topics, words, metrics, comparison=None):
     topik = list(nama_ke_id)
     warna = dict(zip(topik, PALET))
 
-    # CSS lokal — warna hanya di komponen halaman ini, tidak ubah tema global
+    # CSS lokal — hanya untuk kompaksi jarak; warna/font sudah diatur style.css global
     st.markdown("""
 <style>
-/* padding halaman & sembunyikan toolbar Deploy */
-.block-container {padding-top: 0.6rem !important; padding-bottom: 0.2rem !important;}
-header[data-testid="stHeader"] {height: 0 !important; min-height: 0 !important; overflow: hidden !important;}
+.block-container {padding-top: 0.5rem !important; padding-bottom: 0.2rem !important;}
 .stDeployButton {display: none !important;}
 [data-testid="stToolbar"] {display: none !important;}
-/* rapatkan jarak antar elemen */
 div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlock"] {gap: 0.25rem !important;}
 .element-container {margin-bottom: 0.1rem !important;}
-/* tombol Apply hijau tua */
-div[data-testid="stForm"] div[data-testid="stFormSubmitButton"] button {
-    background-color: #1B4D2E !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 700 !important;
-    min-height: 2.2rem !important;
-}
 </style>""", unsafe_allow_html=True)
 
-    st.markdown("#### Perbandingan Topik")
+    render_page_title("PERBANDINGAN TOPIK")
 
     # ── BARIS 1: Donut (kiri) + Coherence (kanan) ───────────────────────────
     col_donut, col_coh = st.columns(2)
@@ -187,9 +190,9 @@ div[data-testid="stForm"] div[data-testid="stFormSubmitButton"] button {
             fig = px.pie(prop, names="topik", values="jumlah", hole=0.42,
                          color="topik", color_discrete_map=warna,
                          title="Proporsi Komentar per Topik")
-            fig.update_layout(height=220, margin=dict(l=5, r=5, t=36, b=5),
-                              legend_title_text="")
-            st.plotly_chart(fig, use_container_width=True)
+            fig.update_layout(legend_title_text="",
+                              title_font=dict(color=config.CHART["font_color"]))
+            st.plotly_chart(_tema_fig(fig, height=220), use_container_width=True)
 
     with col_coh:
         with st.container(border=True):
@@ -198,7 +201,8 @@ div[data-testid="stForm"] div[data-testid="stFormSubmitButton"] button {
                           title="Skor Koherens",
                           labels={"n_topics": "Jumlah Topik",
                                   "coherence_score": "Koherens"})
-            fig.update_traces(line_color="#2D6A4F", marker_color="#2D6A4F")
+            fig.update_traces(line_color=config.COLORS["green_dark"],
+                              marker_color=config.COLORS["green_dark"])
             baris_k = metrics[metrics["n_topics"] == k_dipakai]
             if not baris_k.empty:
                 fig.add_annotation(
@@ -206,12 +210,16 @@ div[data-testid="stForm"] div[data-testid="stFormSubmitButton"] button {
                     y=baris_k["coherence_score"].iloc[0],
                     text=f"Dipakai: K={k_dipakai}",
                     showarrow=True, arrowhead=2,
-                    arrowcolor="#E76F1A",
-                    font=dict(color="#E76F1A", size=11),
-                    bgcolor="white", bordercolor="#E76F1A", borderpad=3,
+                    arrowcolor=config.COLORS["red_orange"],
+                    font=dict(color=config.COLORS["red_orange"], size=11),
+                    bgcolor=config.COLORS["cream_light"],
+                    bordercolor=config.COLORS["red_orange"], borderpad=3,
                 )
-            fig.update_layout(height=220, margin=dict(l=5, r=5, t=36, b=5))
-            st.plotly_chart(fig, use_container_width=True)
+            fig.update_layout(
+                xaxis=dict(gridcolor="rgba(27,67,50,0.1)"),
+                yaxis=dict(gridcolor="rgba(27,67,50,0.1)"),
+            )
+            st.plotly_chart(_tema_fig(fig, height=220), use_container_width=True)
 
     # ── FILTER FORM ─────────────────────────────────────────────────────────
     if "tm_ta" not in st.session_state:
@@ -266,7 +274,11 @@ div[data-testid="stForm"] div[data-testid="stFormSubmitButton"] button {
 
     with col_ts:
         with st.container(border=True):
-            st.markdown("**Tren Jumlah Komentar per Hari**")
+            st.markdown(
+                f"<p style='font-weight:700;color:{config.COLORS['text_dark']};margin:0 0 4px 0;'>"
+                "Tren Jumlah Komentar per Hari</p>",
+                unsafe_allow_html=True,
+            )
             ts = (gabung[gabung["topic_name"].isin([topik_a, topik_b])]
                   .dropna(subset=["date"])
                   .assign(tanggal=lambda d: d["date"].dt.normalize())
@@ -279,21 +291,32 @@ div[data-testid="stForm"] div[data-testid="stFormSubmitButton"] button {
                               color_discrete_map=warna,
                               labels={"tanggal": "", "jumlah": "Komentar",
                                       "topic_name": "Topik"})
-                fig.update_layout(height=250, margin=dict(l=5, r=5, t=10, b=5),
-                                  legend_title_text="")
-                st.plotly_chart(fig, use_container_width=True)
+                fig.update_layout(
+                    legend_title_text="",
+                    xaxis=dict(gridcolor="rgba(27,67,50,0.1)"),
+                    yaxis=dict(gridcolor="rgba(27,67,50,0.1)"),
+                )
+                st.plotly_chart(_tema_fig(fig, height=250,
+                                          margin=dict(l=5, r=5, t=10, b=5)),
+                                use_container_width=True)
 
     with col_kata:
         with st.container(border=True):
             if comparison is not None:
-                st.caption(
-                    "**λ (lambda):** mendekati **1** → kata paling sering di topik; "
-                    "mendekati **0** → kata paling khas/eksklusif topik itu."
+                st.markdown(
+                    f"<p style='font-size:0.82rem;color:{config.COLORS['text_dark']};margin:0 0 4px 0;'>"
+                    "<b>λ (lambda):</b> mendekati <b>1</b> → kata paling sering di topik; "
+                    "mendekati <b>0</b> → kata paling khas/eksklusif topik itu.</p>",
+                    unsafe_allow_html=True,
                 )
                 lam = st.slider("λ", 0.0, 1.0, 0.6, 0.1)
             else:
                 lam = 1.0
-                st.caption("Filter lambda tidak tersedia (topic_comparison.csv belum ada).")
+                st.markdown(
+                    f"<p style='font-size:0.82rem;color:{config.COLORS['muted']};'>"
+                    "Filter lambda tidak tersedia (topic_comparison.csv belum ada).</p>",
+                    unsafe_allow_html=True,
+                )
 
             kk1, kk2 = st.columns(2)
             with kk1:
