@@ -12,8 +12,6 @@ from src.topic_modeling import (
     load_topic_comparison,
 )
 
-st.set_page_config(page_title="Analisis Topik", layout="wide")
-
 # SEMENTARA: ganti dengan load_comments() dari src/data_loader.py (Anggota 2)
 # bila fungsi itu sudah ada. Kolom file ini sudah sesuai kontrak
 # (comment_id, user_id, date, comment_text, likes, shares, replies, text_clean).
