@@ -23,3 +23,9 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Data & notebooks
+data/*.csv
+data/*.xlsx
+data/*.xls
+.ipynb_checkpoints/
