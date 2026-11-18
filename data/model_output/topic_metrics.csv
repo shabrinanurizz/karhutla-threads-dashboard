@@ -1,7 +1,7 @@
-jumlah_topik,coherence
-3,0.42812278165859197
-4,0.4346853975292537
-5,0.43058942530004723
-6,0.4212535535887841
-7,0.42006573122655205
-8,0.4021897455368261
+model_name,n_topics,coherence_score,perplexity,model_config
+LDA,3,0.42423661236115845,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,4,0.4162949679989709,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,5,0.4149101482379865,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,6,0.3990894295625009,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,7,0.4236843741799622,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,8,0.37104336820015893,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
