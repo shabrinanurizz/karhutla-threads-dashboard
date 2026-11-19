@@ -24,22 +24,22 @@ TOPIC_COL_CANDIDATES = (
 
 
 def _render_summary_card(label: str, value: str):
-    """Render kartu ringkasan dengan latar hijau tua agar kontras dengan teks putih."""
+    """Render kartu ringkasan ringkas dengan latar hijau tua agar kontras dan hemat ruang."""
     st.markdown(
         f"""
         <div style="
             background-color: {config.COLORS['green_dark']};
             color: {config.COLORS['text_light']};
-            padding: 18px 20px;
+            padding: 14px 16px;
             border-radius: {config.LAYOUT['card_radius']};
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
             font-family: '{config.FONT_FAMILY}', sans-serif;
         ">
-            <div style="font-size: 0.9rem; font-weight: 600; opacity: 0.9; margin-bottom: 6px;">
+            <div style="font-size: 0.82rem; font-weight: 600; opacity: 0.9; margin-bottom: 4px;">
                 {label}
             </div>
-            <div style="font-size: 1.75rem; font-weight: 800; letter-spacing: 0.5px;">
+            <div style="font-size: 1.45rem; font-weight: 800; letter-spacing: 0.4px;">
                 {value}
             </div>
         </div>
@@ -49,14 +49,20 @@ def _render_summary_card(label: str, value: str):
 
 
 def _format_topic_series(series: pd.Series) -> pd.Series:
-    """Rapikan label topik (misal angka 0/1/2 menjadi 'Topik 1', 'Topik 2', dst.)."""
+    """Rapikan label topik (misal 0 / 0.0 menjadi 'Topik 1', dst.) sambil menjaga NaN."""
     def _clean_val(val):
-        if pd.isna(val) or str(val).strip() == "":
-            return config.EMPTY_VALUE
+        if pd.isna(val):
+            return pd.NA
         s = str(val).strip()
-        if s.isdigit():
-            num = int(s)
-            return f"Topik {num + 1}" if num == 0 else f"Topik {num}"
+        if s == "" or s.lower() in ("nan", "none", config.EMPTY_VALUE):
+            return pd.NA
+        try:
+            num_float = float(s)
+            if num_float.is_integer():
+                num = int(num_float)
+                return f"Topik {num + 1}" if num >= 0 else s
+        except (ValueError, TypeError):
+            pass
         return s
 
     return series.apply(_clean_val)
@@ -119,10 +125,8 @@ def render():
             if unique_topics:
                 topic_options = unique_topics
 
-    # ------------------------------------------------------------------
-    # Baris filter: Dari tanggal, Sampai tanggal, Topik, Cari Komentar, apply
-    # ------------------------------------------------------------------
-    c1, c2, c3, c4, c5 = st.columns([1.6, 1.6, 1.6, 2.2, 0.9])
+    # Baris filter
+    c1, c2, c3, c4, c5 = st.columns([1.45, 1.45, 1.45, 2.25, 1.1])
     with c1:
         date_from = st.date_input("Dari tanggal", key="ce_from", value=None)
     with c2:
@@ -144,12 +148,6 @@ def render():
         if st.button("apply", key="ce_apply", use_container_width=True):
             st.session_state["ce_page"] = 1
 
-    if df is not None and topic_col is None:
-        st.caption(
-            "ℹ️ Data topik belum tersedia di `data/model_output/` (menunggu hasil bagian Topic Modelling), "
-            "sehingga kolom dan filter topik masih menampilkan `—`."
-        )
-
     st.divider()
 
     # Terapkan filter & hitung ringkasan
@@ -161,11 +159,8 @@ def render():
     )
     stats = summary_stats(df_filtered)
 
-    # ------------------------------------------------------------------
-    # Panel kiri: Ringkasan
-    # Panel kanan: Daftar Komentar (tabel dengan pagination)
-    # ------------------------------------------------------------------
-    col_left, col_right = st.columns([0.32, 0.68])
+    # Panel ringkasan dan daftar komentar
+    col_left, col_right = st.columns([0.23, 0.77], gap="medium")
 
     with col_left:
         render_section_header("Ringkasan")
@@ -209,7 +204,6 @@ def render():
             )
             st.session_state["ce_page"] = max(1, min(st.session_state["ce_page"], total_pages))
 
-            # Susun kolom tampilan tabel: Tanggal | Topik | Komentar | Likes
             date_col = _get_col(df_page, "date", ("date", "tanggal", "created_at"))
             text_col = _get_col(df_page, "text", ("comment_text", "komentar", "text", "text_clean"))
             likes_col = _get_col(df_page, "likes", ("likes", "like_count", "like"))
@@ -232,13 +226,22 @@ def render():
                 else 0
             )
 
-            st.dataframe(display_df, use_container_width=True, hide_index=True)
+            st.dataframe(
+                display_df,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Tanggal": st.column_config.TextColumn("Tanggal", width="small"),
+                    "Topik": st.column_config.TextColumn("Topik", width="small"),
+                    "Komentar": st.column_config.TextColumn("Komentar", width="large"),
+                    "Likes": st.column_config.NumberColumn("Likes", width="small"),
+                },
+            )
 
-            # Kontrol Pagination
-            p_prev, p_info, p_next = st.columns([1.2, 2.6, 1.2])
+            p_prev, p_info, p_next = st.columns([1.3, 2.4, 1.3])
             with p_prev:
                 if st.button(
-                    "← Sebelumnya",
+                    "← Prev",
                     key="ce_prev",
                     disabled=st.session_state["ce_page"] <= 1,
                     use_container_width=True,
@@ -247,14 +250,14 @@ def render():
                     st.rerun()
             with p_info:
                 st.markdown(
-                    f"<p style='text-align:center; margin-top:6px;'>"
-                    f"Halaman <b>{st.session_state['ce_page']}</b> dari <b>{total_pages}</b> "
+                    f"<p style='text-align:center; margin-top:6px; font-size:0.9rem;'>"
+                    f"Hal. <b>{st.session_state['ce_page']}</b> / <b>{total_pages}</b> "
                     f"({len(df_filtered):,} komentar)</p>",
                     unsafe_allow_html=True,
                 )
             with p_next:
                 if st.button(
-                    "Berikutnya →",
+                    "Next →",
                     key="ce_next",
                     disabled=st.session_state["ce_page"] >= total_pages,
                     use_container_width=True,
