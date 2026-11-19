@@ -28,4 +28,9 @@ Thumbs.db
 data/*.csv
 data/*.xlsx
 data/*.xls
+data/raw/
+data/processed/
 .ipynb_checkpoints/
+
+# File lokal
+coba.py
