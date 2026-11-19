@@ -41,7 +41,6 @@ def render():
     # ------------------------------------------------------------------
     # KPI baris atas: Rata-rata Likes / Shares / Replies
     # ------------------------------------------------------------------
-    render_pill_label("Metrik Interaksi", variant="orange")
     c1, c2, c3 = st.columns(3)
     with c1:
         render_kpi("Rata-rata Likes", round(df[config.COLUMNS["likes"]].mean(), 2), variant="dark")

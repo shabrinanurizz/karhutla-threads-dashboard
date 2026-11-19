@@ -12,23 +12,57 @@ header[data-testid="stHeader"] { background: transparent; }
 .block-container { padding-top: 1rem; max-width: 100%; }
 
 /* Sidebar */
+/* Sidebar */
 section[data-testid="stSidebar"] {
   background: var(--green);
   border-radius: 0 8px 8px 0;
 }
-section[data-testid="stSidebar"] * { color: #fff; }
-.sidebar-title {
-  font-weight: 800; font-size: 1.7rem; line-height: 1.15; text-align: center;
-  margin: 0.5rem 0 1.5rem 0; color: #fff;
-}
-[data-testid="stSidebarNav"] a, [data-testid="stSidebarNav"] li a {
-  border-radius: 8px; padding: 0.4rem 0.9rem; font-weight: 700;
-}
-[data-testid="stSidebarNav"] a span { color: #8d9a8f !important; font-weight: 700; }
-[data-testid="stSidebarNav"] a:hover { background: rgba(255,255,255,0.08); }
-[data-testid="stSidebarNav"] a[aria-current="page"] { background: var(--orange); }
-[data-testid="stSidebarNav"] a[aria-current="page"] span { color: #fff !important; }
 
+section[data-testid="stSidebar"] * {
+  color: #fff;
+}
+
+.sidebar-title {
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1.15;
+  text-align: center;
+  margin: 0.5rem 0 1.5rem 0;
+  color: #fff;
+}
+
+/* Navigation Menu */
+[data-testid="stSidebarNav"] a {
+  border-radius: 8px;
+  padding: 0.55rem 0.9rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Ukuran tulisan menu */
+[data-testid="stSidebarNav"] a span {
+  color: #8d9a8f !important;
+  font-weight: 700;
+  font-size: 0.95rem !important;
+}
+
+/* Ukuran ikon menu */
+[data-testid="stSidebarNav"] a [data-testid="stIconMaterial"] {
+  font-size: 1.35rem !important;
+}
+
+/* Hover dan menu aktif */
+[data-testid="stSidebarNav"] a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+[data-testid="stSidebarNav"] a[aria-current="page"] {
+  background: var(--orange);
+}
+
+[data-testid="stSidebarNav"] a[aria-current="page"] span {
+  color: #fff !important;
+}
 .identity-card {
   background: var(--cream-light); border-radius: 8px; padding: 14px 16px;
   box-shadow: var(--shadow); margin-top: 1.5rem;
@@ -57,8 +91,20 @@ h1.page-title.accent { color: var(--orange); font-size: 3.4rem; }
 }
 
 .info-light { background: var(--cream-light); }
-.info-light h4 { color: var(--green); font-weight: 800; margin: 0 0 6px 0; font-size: 1.05rem; }
-.info-light p { color: var(--green); margin: 0; font-size: 0.9rem; }
+/* Latar Belakang & Tujuan */
+.info-light h4 {
+  color: var(--green);
+  font-weight: 850;
+  font-size: 1.2rem; /* Ukuran judul */
+  margin: 0 0 1px 0;
+}
+.info-light p {
+  color: var(--green);
+  font-weight: 500; /* Isi dibuat bold */
+  font-size: 1rem; /* Ukuran isi */
+  line-height: 1.2;
+  margin: 0;
+}; 
 .info-dark { background: var(--green); }
 .info-dark h4, .info-dark p { color: #fff; margin: 0; }
 .info-card.placeholder { border: 2px dashed rgba(27, 67, 50, 0.35); box-shadow: none; }
@@ -71,13 +117,53 @@ h1.page-title.accent { color: var(--orange); font-size: 3.4rem; }
 .banner .info-card { margin-bottom: 0; min-height: 110px; }
 
 /* KPI */
+/* KPI */
 .kpi-card {
-  border-radius: var(--radius); box-shadow: var(--shadow); color: #fff;
-  text-align: center; padding: 22px 12px; margin-bottom: 1rem;
-  min-height: 170px; display: flex; flex-direction: column; justify-content: center;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: #fff;
+  text-align: center;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .kpi-dark { background: var(--green); }
 .kpi-red { background: var(--red); }
+.kpi-orange { background: var(--amber); }
+
+.kpi-value {
+  font-weight: 800;
+  line-height: 1.05;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.kpi-title {
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.kpi-delta {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  color: #fff;
+}
+
+.kpi-compact {
+  border-radius: 8px;
+}
+
+.kpi-compact .kpi-value {
+  font-size: 2rem;
+}
 /* Pill label / badge */
 .pill-label {
   border-radius: 8px; padding: 6px 12px; text-align: center; color: #fff;
@@ -108,7 +194,7 @@ h1.page-title.accent { color: var(--orange); font-size: 3.4rem; }
 .flow-dark { background: #17382a; } .flow-red { background: var(--red); }
 .flow-orange { background: var(--amber); }
 .flow-icon { font-size: 1.8rem; }
-.flow-label { font-weight: 700; font-size: 0.85rem; margin-top: 4px; color: #fff; }
+.flow-label { font-weight: 700; font-size: 1.2rem; margin-top: 4px; color: #fff; }
 
 /* Widgets */
 div[data-testid="stTextInput"] input, div[data-baseweb="select"] > div,
