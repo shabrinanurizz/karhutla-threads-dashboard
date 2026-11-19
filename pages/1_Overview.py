@@ -54,30 +54,62 @@ def render():
 
     # 4 KPI card (selaras referensi Overview).
     col1, col2, col3, col4 = st.columns(4)
+
     with col1:
         render_kpi(
-            "Total komentar sebelum pre processing",
+            "Total Komentar Sebelum Pre-processing",
             n_raw,
             variant="dark",
+            width="100%",
+            height="130px",
+            value_size="3rem",
+            title_size="1rem",
+            title_line_height="1.5",
+            title_margin="3px",
+            padding="12px 10px",
         )
+
     with col2:
         render_kpi(
-            "Total Komentar Setelah pre processing",
+            "Total Komentar Setelah Pre-processing",
             n_proc,
             variant="red",
+            width="100%",
+            height="130px",
+            value_size="3rem",
+            title_size="1rem",
+            title_line_height="1.5",
+            title_margin="3px",
+            padding="12px 10px",
         )
+
     with col3:
-        render_kpi("Jumlah pengguna unik", n_user, variant="orange")
+        render_kpi(
+            "Jumlah Pengguna Unik",
+            n_user,
+            variant="orange",
+            width="100%",
+            height="130px",
+            value_size="3rem",
+            title_size="1rem",
+            title_line_height="1.5",
+            title_margin="3px",
+            padding="12px 10px",
+        )
+
     with col4:
-        if periode:
-            render_kpi(
-                "Periode Pengambilan Data",
-                _format_periode(*periode),
-                variant="dark",
-                compact=True,
-            )
-        else:
-            render_kpi("Periode Pengambilan Data", config.EMPTY_VALUE, variant="dark")
+        render_kpi(
+            "Periode Pengambilan Data",
+            "13-08-2026\ns.d.\n12-11-2026",
+            variant="dark",
+            width="100%",
+            height="130px",
+            value_size="1.5rem",
+            title_size="1rem",
+            title_line_height="1.5",
+            title_margin="3px",
+            padding="12px 10px",
+        )
 
     # Banner hijau: Latar Belakang dan Tujuan (placeholder teks).
     render_banner(

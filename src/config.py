@@ -44,8 +44,8 @@ APP_ICON = "🔥"
 SIDEBAR_TITLE = "DASHBOARD KARHUTLA"  # sesuai referensi desain
 
 PROJECT_TITLE = "DASHBOARD ANALISIS KOMENTAR THREADS MENGENAI KARHUTLA"
-BACKGROUND_TEXT = "[Placeholder] Isi latar belakang proyek di sini."
-OBJECTIVE_TEXT = "[Placeholder] Isi tujuan proyek di sini."
+BACKGROUND_TEXT = "Kebakaran hutan dan lahan (karhutla) di Kalimantan pada Agustus 2026 memunculkan berbagai respons publik di media sosial, khususnya Threads. Komentar masyarakat mencerminkan kekhawatiran, opini, kritik, serta harapan terhadap penanganan karhutla. Melalui analisis teks menggunakan metode Natural Language Processing (NLP), percakapan tersebut dapat diolah untuk mengidentifikasi isu dan topik utama yang menjadi perhatian publik."
+OBJECTIVE_TEXT = "Proyek ini bertujuan untuk menganalisis respons publik terhadap krisis karhutla Kalimantan melalui komentar di Threads dengan mengidentifikasi kata-kata dominan, pola keterkaitan antarkata (co-occurrence), serta topik utama menggunakan metode Latent Dirichlet Allocation (LDA). Hasil analisis diharapkan dapat memberikan gambaran mengenai isu dan perhatian masyarakat terhadap krisis karhutla."
 
 GROUP_IDENTITY = {
     "course": "STA1381 - Pengantar Sains Data",

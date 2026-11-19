@@ -72,23 +72,50 @@ def render_section_header(title, description=None):
     st.markdown(html + "</div>", unsafe_allow_html=True)
 
 
-def render_kpi(title, value, delta=None, variant="dark", compact=False):
-    """KPI card berwarna.
+def render_kpi(
+    title,
+    value,
+    delta=None,
+    variant="dark",
+    compact=False,
+    width=None,
+    height=None,
+    value_size="3.6rem",
+    title_size="1rem",
+    title_line_height="1.2",
+    title_margin="4px",
+    padding="22px 12px",
+):
+    """KPI card dengan ukuran dan typography fleksibel."""
 
-    Args:
-        title: Label di bawah angka.
-        value: Angka/teks. Angka diformat gaya Indonesia; None tampil "—".
-        delta: Teks tambahan kecil (opsional), mis. "+5%".
-        variant: "dark" (hijau), "red" (oranye-merah), atau "orange" (kuning-oranye).
-        compact: True untuk kartu kecil (mis. perbandingan topik).
-    """
     shown = value if isinstance(value, str) else format_number(value)
-    delta_html = f"<div class='kpi-delta'>{escape(str(delta))}</div>" if delta else ""
+
+    delta_html = (
+        f"<div class='kpi-delta'>{escape(str(delta))}</div>"
+        if delta else ""
+    )
+    shown_html = escape(str(shown)).replace("\n", "<br>")
     size = " kpi-compact" if compact else ""
+
+    custom_style = ""
+    if width:
+        custom_style += f"width: {width};"
+    if height:
+        custom_style += f"height: {height};"
+
+    custom_style += f"padding: {padding};"
+
     st.markdown(
-        f"<div class='kpi-card kpi-{variant}{size}'>"
-        f"<div class='kpi-value'>{escape(str(shown))}</div>"
-        f"<div class='kpi-title'>{escape(str(title))}</div>{delta_html}</div>",
+        f"<div class='kpi-card kpi-{variant}{size}' "
+        f"style='{custom_style}'>"
+        f"<div class='kpi-value' "
+        f"style='font-size:{value_size};'>{shown_html}</div>"
+        f"<div class='kpi-title' "
+        f"style='font-size:{title_size};"
+        f"line-height:{title_line_height};"
+        f"margin-top:{title_margin};'>"
+        f"{escape(str(title))}</div>"
+        f"{delta_html}</div>",
         unsafe_allow_html=True,
     )
 
