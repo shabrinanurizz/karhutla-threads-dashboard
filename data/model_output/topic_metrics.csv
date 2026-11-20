@@ -1,0 +1,7 @@
+model_name,n_topics,coherence_score,perplexity,model_config
+LDA,3,0.42423661236115845,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,4,0.4162949679989709,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,5,0.4149101482379865,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,6,0.3990894295625009,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,7,0.4236843741799622,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
+LDA,8,0.37104336820015893,,passes=10; alpha=symmetric; random_state=42; no_below=5; no_above=0.5
