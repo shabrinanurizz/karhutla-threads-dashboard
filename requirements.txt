@@ -1,7 +1,8 @@
-﻿streamlit
+streamlit
 pandas
 plotly
 openpyxl
 scikit-learn
 wordcloud
 matplotlib
+networkx
