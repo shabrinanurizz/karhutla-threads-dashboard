@@ -14,6 +14,7 @@ Semua gaya (warna, font, radius) diambil dari `src/config.py`.
 from html import escape
 
 import matplotlib.pyplot as plt
+import networkx as nx
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
@@ -304,3 +305,171 @@ def render_wordcloud(data, text_col, title=None, height=None, key=None):
     st.pyplot(fig_w, use_container_width=True)
     plt.close(fig_w)
 
+
+
+# ---------------------------------------------------------------------------
+# Chart khusus halaman Co-occurrence
+# ---------------------------------------------------------------------------
+_RANK_COLORS = [
+    "#D94A05", "#E85D10", "#F58E0A", "#C9963F",   # 4 teratas: oranye -> emas
+    "#8A8F86", "#6B6F68", "#7D8179", "#9A9E96", "#AEB1AA", "#BFC2BB",
+]
+
+
+def render_ranked_bar_chart(data, label_col, value_col, title=None, height=None, key=None, font_size=11):
+    """Bar horizontal berurutan (peringkat 1 di atas), warna oranye -> abu-abu."""
+    if _is_empty(data):
+        return _empty_notice(title or "Bar chart")
+    colors = [_RANK_COLORS[i % len(_RANK_COLORS)] for i in range(len(data))]
+    fig = go.Figure(go.Bar(
+        x=data[value_col], y=data[label_col], orientation="h",
+        marker_color=colors, text=data[value_col], textposition="outside",
+        cliponaxis=False, hovertemplate="%{y}: %{x}<extra></extra>",
+    ))
+    fig.update_yaxes(autorange="reversed", title=None, tickfont={"size": font_size})
+    fig.update_xaxes(visible=False)
+    fig.update_traces(textfont={"size": font_size})
+    fig.update_layout(showlegend=False, bargap=0.2)
+    fig = _style_figure(fig, title, height)
+    fig.update_layout(margin={"l": 4, "r": 36, "t": 4, "b": 4})
+    st.plotly_chart(fig, use_container_width=True, key=f"chart_{key or 'ranked'}",
+                    config={"displaylogo": False, "displayModeBar": False})
+
+
+def _layout_weights(graph):
+    """Salinan graph dengan bobot dinormalisasi (0.2-1) khusus untuk perhitungan layout."""
+    w_max = max((d["weight"] for _, _, d in graph.edges(data=True)), default=1)
+    lg = nx.Graph()
+    lg.add_nodes_from(graph.nodes)
+    for a, b, d in graph.edges(data=True):
+        lg.add_edge(a, b, weight=0.2 + 0.8 * d["weight"] / w_max)
+    return lg
+
+
+def _packed_layout(graph, aspect=2.6, gap=0.45):
+    """Layout per komponen terhubung, lalu disusun rapat (shelf packing) berbentuk melebar.
+
+    Tanpa ini, spring layout bawaan melempar komponen terpisah sangat jauh satu sama lain.
+    """
+    comps = sorted(nx.connected_components(graph), key=len, reverse=True)
+    blocks = []
+    for comp in comps:
+        n = len(comp)
+        nodes = list(comp)
+        if n == 1:
+            raw = {nodes[0]: (0.0, 0.0)}
+        elif n == 2:
+            raw = {nodes[0]: (-1.0, 0.0), nodes[1]: (1.0, 0.0)}
+        else:
+            sub = graph.subgraph(comp)
+            w_max = max(d["weight"] for _, _, d in sub.edges(data=True))
+            dist = nx.Graph()
+            for a, b, d in sub.edges(data=True):
+                dist.add_edge(a, b, weight=1 + 2 * (1 - d["weight"] / w_max))  # pasangan kuat = jarak pendek
+            try:
+                raw = nx.kamada_kawai_layout(dist, weight="weight")        # sebaran merata, label tidak menumpuk
+            except Exception:                                              # mis. scipy tidak ada
+                raw = nx.spring_layout(_layout_weights(sub), weight="weight",
+                                       k=2.2 / (n ** 0.5), iterations=250, seed=42)
+        xs = [p[0] for p in raw.values()]
+        ys = [p[1] for p in raw.values()]
+        span = max(max(xs) - min(xs), max(ys) - min(ys)) or 1.0
+        size = 0.9 if n == 2 else 0.7 + 0.75 * (n ** 0.5)   # komponen besar -> blok lebih besar
+        stretch_x = 1.8 if n >= 10 else 1.0                  # plot berbentuk melebar -> inti jaringan dilebarkan
+        cx, cy = (max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2
+        local = {nd: ((p[0] - cx) / span * size * stretch_x, (p[1] - cy) / span * size)
+                 for nd, p in raw.items()}
+        lx = [p[0] for p in local.values()]
+        ly = [p[1] for p in local.values()]
+        blocks.append((local, min(lx), min(ly), max(lx) - min(lx), max(ly) - min(ly)))
+
+    total_area = sum((w + gap) * (h + gap) for _, _, _, w, h in blocks)
+    row_limit = max(max(b[3] for b in blocks), (total_area * aspect) ** 0.5)
+
+    pos, x, y, row_h = {}, 0.0, 0.0, 0.0
+    for local, minx, miny, w, h in blocks:
+        if x > 0 and x + w > row_limit:
+            x, y, row_h = 0.0, y + row_h + gap, 0.0
+        for nd, (px, py) in local.items():
+            pos[nd] = (x + px - minx, y + py - miny)
+        x += w + gap
+        row_h = max(row_h, h)
+    return pos
+
+
+def _radial_layout(graph, center):
+    """Kata target di tengah; tetangga makin kuat makin dekat ke tengah (spiral sudut emas)."""
+    neighbors = sorted(
+        (nd for nd in graph.nodes if nd != center),
+        key=lambda nd: -graph[center][nd]["weight"] if graph.has_edge(center, nd) else 0,
+    )
+    w_max = max((graph[center][nd]["weight"] for nd in neighbors if graph.has_edge(center, nd)), default=1)
+    pos = {center: (0.0, 0.0)}
+    import math
+    for i, nd in enumerate(neighbors):
+        w = graph[center][nd]["weight"] if graph.has_edge(center, nd) else 0
+        r = 0.55 + 0.45 * (1 - w / w_max)
+        ang = math.pi / 2 + i * 2.399963
+        pos[nd] = (r * math.cos(ang), r * math.sin(ang))
+    return pos
+
+
+def render_network_graph(graph, title=None, height=None, key=None, center=None):
+    """Network graph kata: node oranye (ukuran = total co-occurrence), edge abu-abu (tebal = jumlah).
+
+    Args:
+        graph: networkx.Graph dengan atribut edge `weight`.
+        center: Kata yang disorot (hijau tua) dan ditaruh di tengah (network kata target).
+    """
+    if graph is None or graph.number_of_nodes() == 0:
+        return _empty_notice(title or "Network")
+
+    pos = _radial_layout(graph, center) if center in graph else _packed_layout(graph)
+
+    fig = go.Figure()
+
+    # Edge dikelompokkan per 4 tingkat ketebalan (supaya jumlah trace kecil)
+    weights = [d["weight"] for _, _, d in graph.edges(data=True)]
+    w_min, w_max = min(weights), max(weights)
+    span = (w_max - w_min) or 1
+    bins = {}
+    for a, b, d in graph.edges(data=True):
+        level = min(3, int(4 * (d["weight"] - w_min) / span))
+        xs, ys = bins.setdefault(level, ([], []))
+        xs += [pos[a][0], pos[b][0], None]
+        ys += [pos[a][1], pos[b][1], None]
+    for level, (xs, ys) in sorted(bins.items()):
+        fig.add_trace(go.Scatter(
+            x=xs, y=ys, mode="lines", hoverinfo="skip",
+            line={"width": 1.0 + level * 1.4, "color": "rgba(90,90,90,0.5)"},
+        ))
+
+    # Node
+    strength = {nd: sum(d["weight"] for _, _, d in graph.edges(nd, data=True)) for nd in graph.nodes}
+    s_min, s_max = min(strength.values()), max(strength.values())
+    s_span = (s_max - s_min) or 1
+    nodes = list(graph.nodes)
+    sizes = [10 + 20 * (strength[nd] - s_min) / s_span for nd in nodes]
+    colors = [config.COLORS["green_dark"] if nd == center else config.COLORS["red_orange"] for nd in nodes]
+    fig.add_trace(go.Scatter(
+        x=[pos[nd][0] for nd in nodes], y=[pos[nd][1] for nd in nodes],
+        mode="markers+text", text=nodes, textposition="top center",
+        textfont={"size": 10, "color": config.COLORS["text_dark"]},
+        marker={"size": sizes, "color": colors, "line": {"width": 0}},
+        customdata=[strength[nd] for nd in nodes],
+        hovertemplate="<b>%{text}</b><br>Total co-occurrence: %{customdata}<extra></extra>",
+    ))
+
+    xs_all = [p[0] for p in pos.values()]
+    ys_all = [p[1] for p in pos.values()]
+    pad_x = 0.07 * ((max(xs_all) - min(xs_all)) or 1)
+    pad_y = 0.14 * ((max(ys_all) - min(ys_all)) or 1)
+    fig.update_xaxes(visible=False, range=[min(xs_all) - pad_x, max(xs_all) + pad_x])
+    fig.update_yaxes(visible=False, range=[min(ys_all) - pad_y, max(ys_all) + pad_y])
+    fig.update_layout(showlegend=False, hovermode="closest", dragmode="pan")
+    fig = _style_figure(fig, title, height or 300)
+    fig.update_layout(margin={"l": 4, "r": 4, "t": 4, "b": 4})
+    st.plotly_chart(
+        fig, use_container_width=True, key=f"network_{key or 'default'}",
+        config={"displaylogo": False, "scrollZoom": True, "displayModeBar": False},
+    )
