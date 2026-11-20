@@ -104,7 +104,7 @@ h1.page-title.accent { color: var(--orange); font-size: 3.4rem; }
   font-size: 1rem; /* Ukuran isi */
   line-height: 1.2;
   margin: 0;
-}; 
+} 
 .info-dark { background: var(--green); }
 .info-dark h4, .info-dark p { color: #fff; margin: 0; }
 .info-card.placeholder { border: 2px dashed rgba(27, 67, 50, 0.35); box-shadow: none; }
