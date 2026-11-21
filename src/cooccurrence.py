@@ -48,6 +48,8 @@ STOPWORDS_VERSION = 3
 # yang masih lolos di kolom `text_clean`.
 # Kalau di grafik masih ada kata sampah, tinggal tambahkan di sini.
 _EXTRA_STOPWORDS = {
+    # kata topik utama: terlalu dominan, muncul di hampir semua pasangan
+    "karhutla", "kebakaran", "hutan", "lahan",
     # penunjuk, penghubung, preposisi
     "ini", "itu", "ni", "tu", "sini", "situ", "sana", "disini", "disana", "dari", "dalam", "dengan",
     "pada", "oleh", "bagi", "tanpa", "antara", "hingga", "sampai", "sejak", "selama", "setelah",
