@@ -1,5 +1,6 @@
 """Halaman Comment Explorer (Tahap 4)."""
 
+import html
 import pandas as pd
 import streamlit as st
 
@@ -21,6 +22,118 @@ TOPIC_COL_CANDIDATES = (
     "topic_id",
     "cluster",
 )
+
+UNCLASSIFIED_LABEL = "Tidak Terklasifikasi"
+
+# Pemetaan ID / nama generik topik ke label deskriptif sesuai halaman Modelling
+DEFAULT_TOPIC_LABELS = {
+    0: "Kritik ke Pemerintah dan Perusahaan",
+    1: "Kondisi Kebakaran dan Lapangan",
+    2: "Doa dan Kecaman Pembakaran",
+    3: "Dampak Bencana dan Peran Sawit",
+}
+
+TOPIC_NAME_ALIASES = {
+    "0": DEFAULT_TOPIC_LABELS[0],
+    "topik 1": DEFAULT_TOPIC_LABELS[0],
+    "topic 1": DEFAULT_TOPIC_LABELS[0],
+    "topic_0": DEFAULT_TOPIC_LABELS[0],
+    "1": DEFAULT_TOPIC_LABELS[1],
+    "topik 2": DEFAULT_TOPIC_LABELS[1],
+    "topic 2": DEFAULT_TOPIC_LABELS[1],
+    "topic_1": DEFAULT_TOPIC_LABELS[1],
+    "2": DEFAULT_TOPIC_LABELS[2],
+    "topik 3": DEFAULT_TOPIC_LABELS[2],
+    "topic 3": DEFAULT_TOPIC_LABELS[2],
+    "topic_2": DEFAULT_TOPIC_LABELS[2],
+    "3": DEFAULT_TOPIC_LABELS[3],
+    "topik 4": DEFAULT_TOPIC_LABELS[3],
+    "topic 4": DEFAULT_TOPIC_LABELS[3],
+    "topic_3": DEFAULT_TOPIC_LABELS[3],
+}
+
+# Palet badge kapsul topik selaras dengan tema dashboard
+TOPIC_BADGE_STYLES = {
+    "Kritik ke Pemerintah dan Perusahaan": ("#E6F0EC", "#163E29", "#B7D1C6"),
+    "Kondisi Kebakaran dan Lapangan": ("#FDECE6", "#C84617", "#F6C3B0"),
+    "Doa dan Kecaman Pembakaran": ("#F9F2E4", "#9A6E24", "#E8D4AE"),
+    "Dampak Bencana dan Peran Sawit": ("#FEF5E4", "#B87314", "#F7DBA3"),
+    UNCLASSIFIED_LABEL: ("#F1F3F2", "#5C6661", "#D5DBD8"),
+}
+
+SORT_BUTTON_LABELS = {
+    "Default": "⇅ Urutkan",
+    "Likes Asc": "↑ Likes",
+    "Likes Desc": "↓ Likes",
+    "Tanggal Asc": "↑ Tanggal",
+    "Tanggal Desc": "↓ Tanggal",
+}
+
+
+def _set_sort_option(option: str):
+    """Simpan opsi urutan global dan kembalikan pagination ke halaman 1."""
+    st.session_state["ce_sort"] = option
+    st.session_state["ce_page"] = 1
+
+
+def _sort_comments(df: pd.DataFrame | None, sort_option: str) -> pd.DataFrame | None:
+    """Urutkan seluruh komentar secara global sebelum dipotong per halaman."""
+    if df is None or df.empty or sort_option == "Default":
+        return df
+
+    df_sorted = df.copy()
+    ascending = sort_option.endswith("Asc")
+
+    if sort_option.startswith("Likes"):
+        likes_col = _get_col(df_sorted, "likes", ("likes", "like_count", "like"))
+        if likes_col:
+            df_sorted["_sort_key"] = pd.to_numeric(
+                df_sorted[likes_col], errors="coerce"
+            ).fillna(0)
+            df_sorted = df_sorted.sort_values(
+                by="_sort_key",
+                ascending=ascending,
+                na_position="last",
+                kind="mergesort",
+            ).drop(columns=["_sort_key"])
+    elif sort_option.startswith("Tanggal"):
+        date_col = _get_col(df_sorted, "date", ("date", "tanggal", "created_at"))
+        if date_col:
+            df_sorted["_sort_key"] = pd.to_datetime(
+                df_sorted[date_col], errors="coerce"
+            )
+            df_sorted = df_sorted.sort_values(
+                by="_sort_key",
+                ascending=ascending,
+                na_position="last",
+                kind="mergesort",
+            ).drop(columns=["_sort_key"])
+
+    return df_sorted
+
+
+def _get_topic_label_map() -> dict[int, str]:
+    """Ambil kamus label topik dari src.topic_modeling jika tersedia, atau gunakan default."""
+    label_map = dict(DEFAULT_TOPIC_LABELS)
+    try:
+        from src import topic_modeling
+
+        for attr in ("TOPIC_LABELS", "TOPIC_NAMES", "LABELS"):
+            custom = getattr(topic_modeling, attr, None)
+            if isinstance(custom, dict) and custom:
+                for k, v in custom.items():
+                    try:
+                        label_map[int(k)] = str(v)
+                    except (ValueError, TypeError):
+                        pass
+                break
+            if isinstance(custom, (list, tuple)) and custom:
+                for idx, v in enumerate(custom):
+                    label_map[idx] = str(v)
+                break
+    except Exception:
+        pass
+    return label_map
 
 
 def _render_summary_card(label: str, value: str):
@@ -51,8 +164,209 @@ def _render_summary_card(label: str, value: str):
     )
 
 
+def _render_topic_pill(topic_name: str) -> str:
+    """Bangun HTML badge kapsul berwarna untuk kolom Topik."""
+    clean_topic = str(topic_name).strip()
+    if clean_topic == "" or clean_topic == config.EMPTY_VALUE:
+        clean_topic = UNCLASSIFIED_LABEL
+    escaped = html.escape(clean_topic)
+
+    bg, fg, border = TOPIC_BADGE_STYLES.get(
+        clean_topic, ("#EBF1EE", "#1E4632", "#C4D6CC")
+    )
+    extra_style = "font-style:italic;" if clean_topic == UNCLASSIFIED_LABEL else ""
+    return (
+        f'<span style="display:inline-block; padding:5px 12px; border-radius:999px; '
+        f'background-color:{bg}; color:{fg}; border:1px solid {border}; '
+        f'font-size:0.78rem; font-weight:600; line-height:1.3; {extra_style}">'
+        f"{escaped}</span>"
+    )
+
+
+def _inject_compact_sort_css():
+    """Rapikan tampilan tombol popover urutan dan menu di dalamnya agar ringkas & modern."""
+    st.markdown(
+        """
+        <style>
+        [data-testid="stPopover"] > button {
+            border-radius: 10px !important;
+            border: 1px solid rgba(22, 62, 41, 0.22) !important;
+            background-color: #FFFFFF !important;
+            color: #163E29 !important;
+            font-weight: 600 !important;
+            font-size: 0.84rem !important;
+            padding: 0.35rem 0.75rem !important;
+            min-height: 36px !important;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+        }
+        [data-testid="stPopover"] > button:hover {
+            background-color: #F1F6F3 !important;
+            border-color: #163E29 !important;
+        }
+        [data-testid="stPopoverBody"] {
+            min-width: 210px !important;
+            max-width: 230px !important;
+            padding: 8px !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+        }
+        [data-testid="stPopoverBody"] button {
+            justify-content: flex-start !important;
+            text-align: left !important;
+            border: none !important;
+            background: transparent !important;
+            color: #2C3531 !important;
+            font-size: 0.85rem !important;
+            font-weight: 500 !important;
+            padding: 0.38rem 0.65rem !important;
+            min-height: 32px !important;
+            border-radius: 8px !important;
+        }
+        [data-testid="stPopoverBody"] button:hover {
+            background-color: #F3F5F2 !important;
+            color: #163E29 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_modern_comments_table(display_df: pd.DataFrame, sort_option: str = "Default"):
+    """Render tabel Daftar Komentar modern dengan header hijau tua dan badge topik."""
+    green_dark = config.COLORS.get("green_dark", "#163E29")
+    text_light = config.COLORS.get("text_light", "#F5F3EB")
+    font_family = config.FONT_FAMILY
+
+    arrow = "↑" if sort_option.endswith("Asc") else "↓"
+    tgl_header = f"Tanggal {arrow}" if sort_option.startswith("Tanggal") else "Tanggal"
+    likes_header = f"Likes {arrow}" if sort_option.startswith("Likes") else "Likes"
+
+    css = f"""
+<style>
+.ce-table-wrapper {{
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(22, 62, 41, 0.14);
+    box-shadow: 0 4px 16px rgba(22, 62, 41, 0.07);
+    margin-bottom: 14px;
+    font-family: '{font_family}', sans-serif;
+}}
+.ce-modern-table {{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}}
+.ce-modern-table thead tr {{
+    background-color: {green_dark};
+    color: {text_light};
+}}
+.ce-modern-table th {{
+    padding: 14px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+}}
+.ce-modern-table td {{
+    padding: 13px 16px;
+    border-bottom: 1px solid #EEF1EF;
+    vertical-align: middle;
+    color: #1F2924;
+}}
+.ce-modern-table tbody tr:last-child td {{
+    border-bottom: none;
+}}
+.ce-modern-table tbody tr:nth-child(even) {{
+    background-color: #FAFBF9;
+}}
+.ce-modern-table tbody tr:hover {{
+    background-color: #F1F6F3;
+    transition: background-color 0.15s ease;
+}}
+.ce-col-date {{
+    white-space: nowrap;
+    color: #55625C !important;
+    font-size: 0.84rem;
+    font-weight: 500;
+    width: 120px;
+}}
+.ce-col-topic {{
+    width: 260px;
+}}
+.ce-col-comment {{
+    line-height: 1.5;
+    word-break: break-word;
+}}
+.ce-col-likes {{
+    text-align: right;
+    white-space: nowrap;
+    width: 105px;
+}}
+.ce-likes-pill {{
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: #F4F6F5;
+    color: #2C3A33;
+    font-weight: 700;
+    font-size: 0.82rem;
+}}
+.ce-likes-pill.has-likes {{
+    background-color: #FDECE6;
+    color: #C84617;
+}}
+</style>
+"""
+
+    rows_html = []
+    for _, row in display_df.iterrows():
+        tgl = html.escape(str(row["Tanggal"]))
+        topik_badge = _render_topic_pill(str(row["Topik"]))
+        komentar = html.escape(str(row["Komentar"]))
+        likes_num = int(row["Likes"])
+        likes_cls = "ce-likes-pill has-likes" if likes_num > 0 else "ce-likes-pill"
+
+        rows_html.append(
+            "<tr>"
+            f'<td class="ce-col-date">{tgl}</td>'
+            f'<td class="ce-col-topic">{topik_badge}</td>'
+            f'<td class="ce-col-comment">{komentar}</td>'
+            f'<td class="ce-col-likes"><span class="{likes_cls}">♥ {likes_num:,}</span></td>'
+            "</tr>"
+        )
+
+    table_html = (
+        css
+        + '<div class="ce-table-wrapper">'
+        + '<table class="ce-modern-table">'
+        + "<thead><tr>"
+        + f"<th>{tgl_header}</th>"
+        + "<th>Topik</th>"
+        + "<th>Komentar</th>"
+        + f'<th style="text-align:right;">{likes_header}</th>'
+        + "</tr></thead>"
+        + "<tbody>"
+        + "".join(rows_html)
+        + "</tbody></table></div>"
+    )
+    st.markdown(table_html, unsafe_allow_html=True)
+
+
 def _format_topic_series(series: pd.Series) -> pd.Series:
-    """Pertahankan label nama topik dari Modelling; rapikan jika masih berupa angka."""
+    """Ubah ID angka atau 'Topik 1..4' menjadi nama kategori topik sesuai halaman Modelling."""
+    label_map = _get_topic_label_map()
+    aliases = dict(TOPIC_NAME_ALIASES)
+    for idx, name in label_map.items():
+        aliases[str(idx)] = name
+        aliases[f"topik {idx + 1}"] = name
+        aliases[f"topic {idx + 1}"] = name
+        aliases[f"topic_{idx}"] = name
+
     def _clean_val(val):
         if pd.isna(val):
             return pd.NA
@@ -63,10 +377,10 @@ def _format_topic_series(series: pd.Series) -> pd.Series:
             num_float = float(s)
             if num_float.is_integer():
                 num = int(num_float)
-                return f"Topik {num + 1}" if num >= 0 else s
+                return label_map.get(num, f"Topik {num + 1}" if num >= 0 else s)
         except ValueError:
             pass
-        return s
+        return aliases.get(s.lower(), s)
 
     return series.apply(_clean_val)
 
@@ -110,7 +424,6 @@ def _load_explorer_data() -> pd.DataFrame | None:
     if topic_col is not None:
         formatted = _format_topic_series(df[topic_col])
         df[topic_col] = formatted
-        # Sinkronkan ke nama kolom standar agar filter_comments() dan summary_stats() membacanya
         std_topic_col = config.COLUMNS.get("topic", "topic")
         df[std_topic_col] = formatted
         df["topic"] = formatted
@@ -120,15 +433,15 @@ def _load_explorer_data() -> pd.DataFrame | None:
 
 def render():
     render_page_title("COMMENT EXPLORER")
+    _inject_compact_sort_css()
+
+    if "ce_sort" not in st.session_state:
+        st.session_state["ce_sort"] = "Default"
 
     df = _load_explorer_data()
 
-    topic_options = [
-        "Kritik ke Pemerintah dan Perusahaan",
-        "Kondisi Kebakaran dan Lapangan",
-        "Doa dan Kecaman Pembakaran",
-        "Dampak Bencana dan Peran Sawit",
-    ]
+    label_map = _get_topic_label_map()
+    topic_options = list(label_map.values())
     topic_col = None
     if df is not None:
         topic_col = _find_populated_topic_col(df)
@@ -144,6 +457,9 @@ def render():
             )
             if unique_topics:
                 topic_options = unique_topics
+
+    if UNCLASSIFIED_LABEL not in topic_options:
+        topic_options = [*topic_options, UNCLASSIFIED_LABEL]
 
     # ------------------------------------------------------------------
     # Baris 1: Filter (Dari tanggal, Sampai tanggal, Topik, Cari Komentar, apply)
@@ -170,11 +486,13 @@ def render():
         if st.button("apply", key="ce_apply", use_container_width=True):
             st.session_state["ce_page"] = 1
 
-    # Terapkan filter & pastikan filter topik ikut menyaring baris tabel
+    st.divider()
+
+    # Terapkan filter tanggal & kata kunci, lalu filter topik
     df_filtered = filter_comments(
         df,
         date_range=(date_from, date_to),
-        topic=selected_topic,
+        topic=None,
         query=search_query,
     )
     if (
@@ -183,10 +501,21 @@ def render():
         and topic_col
         and topic_col in df_filtered.columns
     ):
-        df_filtered = df_filtered[
-            df_filtered[topic_col].fillna("").astype(str).str.strip()
-            == str(selected_topic).strip()
-        ]
+        if selected_topic == UNCLASSIFIED_LABEL:
+            df_filtered = df_filtered[
+                df_filtered[topic_col].isna()
+                | (
+                    df_filtered[topic_col]
+                    .astype(str)
+                    .str.strip()
+                    .isin(["", config.EMPTY_VALUE, UNCLASSIFIED_LABEL])
+                )
+            ]
+        else:
+            df_filtered = df_filtered[
+                df_filtered[topic_col].fillna("").astype(str).str.strip()
+                == str(selected_topic).strip()
+            ]
 
     stats = summary_stats(df_filtered)
 
@@ -198,7 +527,11 @@ def render():
     top_topic_val = (
         str(stats["topik_terbanyak"])
         if stats["topik_terbanyak"] is not None
-        else config.EMPTY_VALUE
+        else (
+            UNCLASSIFIED_LABEL
+            if selected_topic == UNCLASSIFIED_LABEL
+            else config.EMPTY_VALUE
+        )
     )
     avg_likes_val = (
         f"{stats['rata_rata_likes']:.1f}"
@@ -217,17 +550,48 @@ def render():
     st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
 
     # ------------------------------------------------------------------
-    # Baris 3: Daftar Komentar
+    # Baris 3: Header Daftar Komentar + Tombol Popover Urutan Ringkas
     # ------------------------------------------------------------------
-    render_section_header("Daftar Komentar")
+    hdr_col, sort_btn_col = st.columns([4.6, 1.1])
+    with hdr_col:
+        render_section_header("Daftar Komentar")
+    with sort_btn_col:
+        current_sort = st.session_state["ce_sort"]
+        btn_label = SORT_BUTTON_LABELS.get(current_sort, "⇅ Urutkan")
+        with st.popover(btn_label, use_container_width=True):
+            st.markdown(
+                "<div style='font-size:0.75rem; font-weight:700; color:#5C6661; "
+                "padding:2px 8px 6px 8px; border-bottom:1px solid #ECEFED; margin-bottom:4px;'>"
+                "Urutkan Semua Data</div>",
+                unsafe_allow_html=True,
+            )
+            menu_items = [
+                ("↑  Likes ascending", "Likes Asc"),
+                ("↓  Likes descending", "Likes Desc"),
+                ("↑  Tanggal ascending", "Tanggal Asc"),
+                ("↓  Tanggal descending", "Tanggal Desc"),
+                ("↺  Default", "Default"),
+            ]
+            for label, opt_val in menu_items:
+                prefix = "✓ " if current_sort == opt_val else ""
+                if st.button(
+                    f"{prefix}{label}",
+                    key=f"ce_opt_{opt_val}",
+                    use_container_width=True,
+                ):
+                    _set_sort_option(opt_val)
+                    st.rerun()
 
-    if df_filtered is None:
+    # Urutkan SELURUH komentar sebelum dipotong per halaman
+    df_sorted = _sort_comments(df_filtered, st.session_state["ce_sort"])
+
+    if df_sorted is None:
         render_data_notice(
             "Dataset komentar belum ditemukan di folder data/processed/comments_clean.csv "
             "atau data/raw/comments_raw.csv. Tambahkan file dataset untuk melihat daftar komentar.",
             level="info",
         )
-    elif df_filtered.empty:
+    elif df_sorted.empty:
         render_data_notice(
             "Tidak ada komentar yang sesuai dengan filter yang dipilih.",
             level="info",
@@ -238,7 +602,7 @@ def render():
 
         page_size = 10
         df_page, total_pages = paginate(
-            df_filtered, page=st.session_state["ce_page"], page_size=page_size
+            df_sorted, page=st.session_state["ce_page"], page_size=page_size
         )
         st.session_state["ce_page"] = max(1, min(st.session_state["ce_page"], total_pages))
 
@@ -253,9 +617,11 @@ def render():
             else "-"
         )
         display_df["Topik"] = (
-            df_page[topic_col].fillna(config.EMPTY_VALUE)
+            df_page[topic_col]
+            .replace(["", config.EMPTY_VALUE], pd.NA)
+            .fillna(UNCLASSIFIED_LABEL)
             if topic_col and topic_col in df_page.columns
-            else config.EMPTY_VALUE
+            else UNCLASSIFIED_LABEL
         )
         display_df["Komentar"] = df_page[text_col].fillna("") if text_col else ""
         display_df["Likes"] = (
@@ -264,17 +630,7 @@ def render():
             else 0
         )
 
-        st.dataframe(
-            display_df,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Tanggal": st.column_config.TextColumn("Tanggal", width="small"),
-                "Topik": st.column_config.TextColumn("Topik", width="medium"),
-                "Komentar": st.column_config.TextColumn("Komentar", width="large"),
-                "Likes": st.column_config.NumberColumn("Likes", width="small"),
-            },
-        )
+        _render_modern_comments_table(display_df, sort_option=st.session_state["ce_sort"])
 
         p_prev, p_info, p_next = st.columns([1.2, 2.6, 1.2])
         with p_prev:
@@ -290,7 +646,7 @@ def render():
             st.markdown(
                 f"<p style='text-align:center; margin-top:6px; font-size:0.9rem;'>"
                 f"Hal. <b>{st.session_state['ce_page']}</b> / <b>{total_pages}</b> "
-                f"({len(df_filtered):,} komentar)</p>",
+                f"({len(df_sorted):,} komentar)</p>",
                 unsafe_allow_html=True,
             )
         with p_next:
