@@ -137,25 +137,25 @@ def _get_topic_label_map() -> dict[int, str]:
 
 
 def _render_summary_card(label: str, value: str):
-    """Render kartu ringkasan horizontal dengan latar hijau tua agar kontras dan proporsional."""
+    """Render kartu ringkasan horizontal yang proporsional untuk tampilan satu layar penuh."""
     st.markdown(
         f"""
         <div style="
             background-color: {config.COLORS['green_dark']};
             color: {config.COLORS['text_light']};
-            padding: 14px 18px;
+            padding: 12px 18px;
             border-radius: {config.LAYOUT['card_radius']};
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
             font-family: '{config.FONT_FAMILY}', sans-serif;
-            min-height: 88px;
+            min-height: 76px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 0.82rem; font-weight: 600; opacity: 0.9; margin-bottom: 4px;">
+            <div style="font-size: 0.8rem; font-weight: 600; opacity: 0.9; margin-bottom: 3px;">
                 {label}
             </div>
-            <div style="font-size: 1.25rem; font-weight: 800; line-height: 1.25;">
+            <div style="font-size: 1.2rem; font-weight: 800; line-height: 1.2;">
                 {value}
             </div>
         </div>
@@ -176,18 +176,28 @@ def _render_topic_pill(topic_name: str) -> str:
     )
     extra_style = "font-style:italic;" if clean_topic == UNCLASSIFIED_LABEL else ""
     return (
-        f'<span style="display:inline-block; padding:5px 12px; border-radius:999px; '
+        f'<span style="display:inline-block; padding:4px 11px; border-radius:999px; '
         f'background-color:{bg}; color:{fg}; border:1px solid {border}; '
-        f'font-size:0.78rem; font-weight:600; line-height:1.3; {extra_style}">'
+        f'font-size:0.76rem; font-weight:600; line-height:1.25; {extra_style}">'
         f"{escaped}</span>"
     )
 
 
-def _inject_compact_sort_css():
-    """Rapikan tampilan tombol popover urutan dan menu di dalamnya agar ringkas & modern."""
+def _inject_fullscreen_layout_css():
+    """Atur padding layar penuh dan tombol popover urutan agar pas satu viewport."""
     st.markdown(
         """
         <style>
+        .block-container {
+            padding-top: 1.35rem !important;
+            padding-bottom: 0.75rem !important;
+            padding-left: 2.2rem !important;
+            padding-right: 2.2rem !important;
+            max-width: 100% !important;
+        }
+        [data-testid="stPopover"] {
+            margin-top: 14px !important;
+        }
         [data-testid="stPopover"] > button {
             border-radius: 10px !important;
             border: 1px solid rgba(22, 62, 41, 0.22) !important;
@@ -195,7 +205,7 @@ def _inject_compact_sort_css():
             color: #163E29 !important;
             font-weight: 600 !important;
             font-size: 0.84rem !important;
-            padding: 0.35rem 0.75rem !important;
+            padding: 0.32rem 0.75rem !important;
             min-height: 36px !important;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
         }
@@ -218,7 +228,7 @@ def _inject_compact_sort_css():
             color: #2C3531 !important;
             font-size: 0.85rem !important;
             font-weight: 500 !important;
-            padding: 0.38rem 0.65rem !important;
+            padding: 0.36rem 0.65rem !important;
             min-height: 32px !important;
             border-radius: 8px !important;
         }
@@ -233,7 +243,7 @@ def _inject_compact_sort_css():
 
 
 def _render_modern_comments_table(display_df: pd.DataFrame, sort_option: str = "Default"):
-    """Render tabel Daftar Komentar modern dengan header hijau tua dan badge topik."""
+    """Render tabel Daftar Komentar modern yang mengisi penuh layar secara proporsional."""
     green_dark = config.COLORS.get("green_dark", "#163E29")
     text_light = config.COLORS.get("text_light", "#F5F3EB")
     font_family = config.FONT_FAMILY
@@ -251,32 +261,33 @@ def _render_modern_comments_table(display_df: pd.DataFrame, sort_option: str = "
     background-color: #FFFFFF;
     border: 1px solid rgba(22, 62, 41, 0.14);
     box-shadow: 0 4px 16px rgba(22, 62, 41, 0.07);
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     font-family: '{font_family}', sans-serif;
 }}
 .ce-modern-table {{
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
 }}
 .ce-modern-table thead tr {{
     background-color: {green_dark};
     color: {text_light};
 }}
 .ce-modern-table th {{
-    padding: 14px 16px;
-    font-size: 0.8rem;
+    padding: 11px 16px;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     border: none;
 }}
 .ce-modern-table td {{
-    padding: 13px 16px;
+    padding: 10px 16px;
     border-bottom: 1px solid #EEF1EF;
     vertical-align: middle;
     color: #1F2924;
+    height: 52px;
 }}
 .ce-modern-table tbody tr:last-child td {{
     border-bottom: none;
@@ -291,15 +302,21 @@ def _render_modern_comments_table(display_df: pd.DataFrame, sort_option: str = "
 .ce-col-date {{
     white-space: nowrap;
     color: #55625C !important;
-    font-size: 0.84rem;
+    font-size: 0.83rem;
     font-weight: 500;
-    width: 120px;
+    width: 115px;
 }}
 .ce-col-topic {{
-    width: 260px;
+    width: 265px;
 }}
 .ce-col-comment {{
-    line-height: 1.5;
+    line-height: 1.38;
+}}
+.ce-comment-clamp {{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     word-break: break-word;
 }}
 .ce-col-likes {{
@@ -314,7 +331,7 @@ def _render_modern_comments_table(display_df: pd.DataFrame, sort_option: str = "
     background-color: #F4F6F5;
     color: #2C3A33;
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
 }}
 .ce-likes-pill.has-likes {{
     background-color: #FDECE6;
@@ -335,7 +352,7 @@ def _render_modern_comments_table(display_df: pd.DataFrame, sort_option: str = "
             "<tr>"
             f'<td class="ce-col-date">{tgl}</td>'
             f'<td class="ce-col-topic">{topik_badge}</td>'
-            f'<td class="ce-col-comment">{komentar}</td>'
+            f'<td class="ce-col-comment" title="{komentar}"><div class="ce-comment-clamp">{komentar}</div></td>'
             f'<td class="ce-col-likes"><span class="{likes_cls}">♥ {likes_num:,}</span></td>'
             "</tr>"
         )
@@ -433,7 +450,7 @@ def _load_explorer_data() -> pd.DataFrame | None:
 
 def render():
     render_page_title("COMMENT EXPLORER")
-    _inject_compact_sort_css()
+    _inject_fullscreen_layout_css()
 
     if "ce_sort" not in st.session_state:
         st.session_state["ce_sort"] = "Default"
@@ -485,8 +502,6 @@ def render():
         st.write("")
         if st.button("apply", key="ce_apply", use_container_width=True):
             st.session_state["ce_page"] = 1
-
-    st.divider()
 
     # Terapkan filter tanggal & kata kunci, lalu filter topik
     df_filtered = filter_comments(
@@ -547,8 +562,6 @@ def render():
     with s3:
         _render_summary_card("Rata-rata likes", avg_likes_val)
 
-    st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
-
     # ------------------------------------------------------------------
     # Baris 3: Header Daftar Komentar + Tombol Popover Urutan Ringkas
     # ------------------------------------------------------------------
@@ -600,7 +613,7 @@ def render():
         if "ce_page" not in st.session_state:
             st.session_state["ce_page"] = 1
 
-        page_size = 10
+        page_size = 5
         df_page, total_pages = paginate(
             df_sorted, page=st.session_state["ce_page"], page_size=page_size
         )
@@ -644,7 +657,7 @@ def render():
                 st.rerun()
         with p_info:
             st.markdown(
-                f"<p style='text-align:center; margin-top:6px; font-size:0.9rem;'>"
+                f"<p style='text-align:center; margin-top:6px; font-size:0.88rem;'>"
                 f"Hal. <b>{st.session_state['ce_page']}</b> / <b>{total_pages}</b> "
                 f"({len(df_sorted):,} komentar)</p>",
                 unsafe_allow_html=True,
