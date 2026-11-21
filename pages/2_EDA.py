@@ -99,13 +99,6 @@ def render():
         gap: 0.35rem;
     }
 
-    .page-title {
-        font-size: 2.4rem !important;
-        font-weight: 800 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0.2rem !important;
-    }
-
     /* Border seluruh kartu visualisasi */
     div[data-testid="stVerticalBlockBorderWrapper"] > div,
     div[data-testid="stVerticalBlockBorderWrapper"] .st-emotion-cache-s5u6nk {
