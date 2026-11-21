@@ -50,13 +50,17 @@ OBJECTIVE_TEXT = "Proyek ini bertujuan untuk menganalisis respons publik terhada
 GROUP_IDENTITY = {
     "course": "STA1381 - Pengantar Sains Data",
     "lecturer": "Septian Rahardiantoro S.Stat., M.Si., Ph.D.",
-    "members": ["Muhammad Ayyash S.| M0401241001",
-                "Daffa Lukman W. A. J. | M0401241008",
-                "Shabrina Nur Izzati | M0401241011",
-                "Najwa Salsabila M.N | M0401241016",
-                "Uma Keisha Abriana  | M0401241022",
-                "Naurah Aathirah Farid | M0401241037"
-                ],  # placeholder
+    "members": [
+        f"{nama:<25} | {nim}"
+        for nama, nim in [
+            ("Muhammad Ayyash S.", "M0401241001"),
+            ("Daffa Lukman W. A. J.", "M0401241008"),
+            ("Shabrina Nur Izzati", "M0401241011"),
+            ("Najwa Salsabila M.N", "M0401241016"),
+            ("Uma Keisha Abriana", "M0401241022"),
+            ("Naurah Aathirah Farid", "M0401241037"),
+        ]
+    ],
 }
 
 # Langkah alur analisis (label, ikon, varian warna). Sesuai referensi Overview.

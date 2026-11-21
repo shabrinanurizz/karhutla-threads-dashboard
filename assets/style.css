@@ -12,7 +12,6 @@ header[data-testid="stHeader"] { background: transparent; }
 .block-container { padding-top: 1rem; max-width: 100%; }
 
 /* Sidebar */
-/* Sidebar */
 section[data-testid="stSidebar"] {
   background: var(--green);
   border-radius: 0 8px 8px 0;
@@ -80,7 +79,7 @@ h1.page-title {
   color: var(--green); font-weight: 800; font-size: 2.6rem;
   text-transform: uppercase; line-height: 1.1; margin: 0 0 1rem 0; padding: 0;
 }
-h1.page-title.accent { color: var(--orange); font-size: 3.4rem; }
+h1.page-title.accent { color: var(--orange); font-size: 3rem; }
 .section-header h3 { color: var(--green); font-weight: 800; margin: 0.5rem 0 0 0; }
 .section-header p { color: var(--green); opacity: 0.75; margin: 0 0 0.5rem 0; }
 
@@ -116,7 +115,6 @@ h1.page-title.accent { color: var(--orange); font-size: 3.4rem; }
 }
 .banner .info-card { margin-bottom: 0; min-height: 110px; }
 
-/* KPI */
 /* KPI */
 .kpi-card {
   border-radius: var(--radius);
