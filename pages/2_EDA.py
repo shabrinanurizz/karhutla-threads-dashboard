@@ -47,8 +47,8 @@ def render_wordcloud(data):
         ]
 
     wc = WordCloud(
-        width=600,
-        height=180,
+        width=500,
+        height=220,
         background_color="#F8F5EC",
         color_func=color_word,
         max_words=65,
@@ -203,21 +203,21 @@ def render():
     col1, col2 = st.columns(2, gap="small")
 
     with col1:
-        with st.container(border=True, height=340):
+        with st.container(border=True, height=450):
             st.markdown(
                 '<div class="eda-card-title">WordCloud Komentar</div>',
                 unsafe_allow_html=True,
             )
 
             st.markdown(
-                '<div style="height: 25px;"></div>',
+                '<div style="height: 55px;"></div>',
                 unsafe_allow_html=True,
             )
 
             render_wordcloud(wordcloud_data)
 
     with col2:
-        with st.container(border=True, height=340):
+        with st.container(border=True, height=450):
             st.markdown(
                 '<div style="height: 25px;"></div>',
                 unsafe_allow_html=True,
@@ -228,7 +228,7 @@ def render():
                 x="jumlah_kata",
                 title="Distribusi Panjang Komentar (Jumlah Kata)",
                 nbins=30,
-                height=280,
+                height=380,
                 key="eda_comment_length",
             )
 
@@ -236,25 +236,25 @@ def render():
     col1, col2 = st.columns(2, gap="small")
 
     with col1:
-        with st.container(border=True, height=260):
+        with st.container(border=True, height=380):
             render_line_chart(
                 daily,
                 x="tanggal",
                 y="jumlah",
                 title="Tren Jumlah Komentar per Hari",
-                height=220,
+                height=340,
                 key="eda_daily_comments",
             )
 
     with col2:
-        with st.container(border=True, height=260):
+        with st.container(border=True, height=380):
             render_heatmap(
                 activity,
                 x="jam",
                 y="hari",
                 z="jumlah",
                 title="Aktivitas Komentar berdasarkan Hari dan Jam",
-                height=220,
+                height=340,
                 key="eda_hourly_activity",
             )
 
