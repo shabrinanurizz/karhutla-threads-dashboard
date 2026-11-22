@@ -71,26 +71,3 @@ Sistem desain tertulis di `src/config.py` (warna, font, path, navigasi) dan
 diterapkan di `assets/style.css`. Komponen visualisasi reusable ada di
 `src/visualization.py` sehingga dapat diimpor oleh semua halaman dan anggota
 tim lainnya.
-
-## Catatan data
-
-- Dataset belum diubah; file asli berada di `data/raw/` dan hasil
-  preprocessing di `data/processed/`.
-- Jika dataset belum tersedia, halaman menampilkan pesan peringatan yang jelas,
-  bukan angka dummy.
-- Untuk Tahap 4 (EDA, Co-occurrence), isi `config.RAW_DATA_FILE` dan
-  `config.PROCESSED_DATA_FILE` serta periksa kolom dataset sebelum
-  mengimplementasikan analisis.
-
-## Tahapan pengerjaan
-
-1. Inspeksi dan fondasi (selesai)
-2. Analisis 5 gambar referensi → design system (selesai)
-3. Fondasi dan Overview (selesai)
-4. EDA dan Co-occurrence (menunggu instruksi berikutnya)
-5. Placeholder Topic Modeling dan Comment Explorer (selesai sebagai kerangka)
-6. Pengujian
-
-## Lisensi
-
-Tentukan lisensi proyek sesuai kebutuhan tim.
