@@ -48,7 +48,7 @@ def render_wordcloud(data):
 
     wc = WordCloud(
         width=500,
-        height=160,
+        height=190,
         background_color="#F8F5EC",
         color_func=color_word,
         max_words=65,
@@ -203,7 +203,7 @@ def render():
     col1, col2 = st.columns(2, gap="small")
 
     with col1:
-        with st.container(border=True, height=320):
+        with st.container(border=True, height=360):
             st.markdown(
                 '<div class="eda-card-title">WordCloud Komentar</div>',
                 unsafe_allow_html=True,
@@ -217,7 +217,7 @@ def render():
             render_wordcloud(wordcloud_data)
 
     with col2:
-        with st.container(border=True, height=320):
+        with st.container(border=True, height=360):
             st.markdown(
                 '<div style="height: 10px;"></div>',
                 unsafe_allow_html=True,
@@ -228,7 +228,7 @@ def render():
                 x="jumlah_kata",
                 title="Distribusi Panjang Komentar (Jumlah Kata)",
                 nbins=30,
-                height=260,
+                height=280,
                 key="eda_comment_length",
             )
 
@@ -236,25 +236,25 @@ def render():
     col1, col2 = st.columns(2, gap="small")
 
     with col1:
-        with st.container(border=True, height=270):
+        with st.container(border=True, height=310):
             render_line_chart(
                 daily,
                 x="tanggal",
                 y="jumlah",
                 title="Tren Jumlah Komentar per Hari",
-                height=230,
+                height=250,
                 key="eda_daily_comments",
             )
 
     with col2:
-        with st.container(border=True, height=270):
+        with st.container(border=True, height=310):
             render_heatmap(
                 activity,
                 x="jam",
                 y="hari",
                 z="jumlah",
                 title="Aktivitas Komentar berdasarkan Hari dan Jam",
-                height=230,
+                height=250,
                 key="eda_hourly_activity",
             )
 
