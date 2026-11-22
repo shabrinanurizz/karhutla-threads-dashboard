@@ -35,14 +35,15 @@ from src.visualization import (
 # ---------------------------------------------------------------------------
 # Pengaturan (ubah di sini untuk menyesuaikan tampilan)
 # ---------------------------------------------------------------------------
-DEFAULT_MIN_COOCCUR = 50   # ~57 kata pada dataset saat ini
+DEFAULT_MIN_COOCCUR = 40   # ~60 kata pada dataset saat ini
 MAX_EDGES = 250            # batas garis supaya grafik tetap terbaca
 BASE_MIN_COOCCUR = 2       # ambang dasar perhitungan (filter di atasnya dilakukan di memori)
 
-MAIN_CHART_H = 230         # tinggi plot jaringan utama (px)
-BOTTOM_CHART_H = 215       # tinggi plot Network Kata Target (px)
-TOP10_CHART_H = BOTTOM_CHART_H + 30   # bar chart sedikit lebih tinggi karena headernya lebih pendek
-BOTTOM_CARD_H = BOTTOM_CHART_H + 80   # tinggi minimum dua kartu bawah (dibuat sama)
+SCALE = 1.4                              # satu angka untuk membesar/mengecilkan semua plot
+MAIN_CHART_H = int(230 * SCALE)          # tinggi plot jaringan utama (px)
+BOTTOM_CHART_H = int(215 * SCALE)        # tinggi plot Network Kata Target (px)
+TOP10_CHART_H = BOTTOM_CHART_H + 30      # bar chart sedikit lebih tinggi karena headernya lebih pendek
+BOTTOM_CARD_H = BOTTOM_CHART_H + 80      # tinggi minimum dua kartu bawah (dibuat sama)
 
 PAGE_CSS = """
 <style>
@@ -107,8 +108,11 @@ def _card_title(text: str):
 
 
 @st.cache_data(show_spinner="Menghitung co-occurrence...")
-def _compute_base_cooccurrence(texts: tuple):
-    """Hitung semua pasangan kata (>= 2x) sekali saja; hasil di-cache."""
+def _compute_base_cooccurrence(texts: tuple, stopword_count: int):
+    """Hitung semua pasangan kata (>= 2x) sekali saja; hasil di-cache.
+
+    `stopword_count` hanya untuk menyegarkan cache saat daftar stopword berubah.
+    """
     return calculate_cooccurrence(tokenize_texts(list(texts)), min_cooccur=BASE_MIN_COOCCUR)
 
 
@@ -151,7 +155,7 @@ def render():
         return
 
     texts = tuple(df[text_col].dropna().astype(str).tolist())
-    co_all = _compute_base_cooccurrence(texts)
+    co_all = _compute_base_cooccurrence(texts, len(cooc._STOPWORDS_ID))
     if co_all is None:
         render_data_notice("Tidak ada pasangan kata yang dapat dihitung dari dataset.", level="warning")
         return
@@ -218,7 +222,7 @@ def render():
                 else:
                     top_pairs["pasangan"] = top_pairs["kata_a"] + " – " + top_pairs["kata_b"]
                     render_ranked_bar_chart(
-                        top_pairs, "pasangan", "jumlah", height=TOP10_CHART_H, key="top_pairs"
+                        top_pairs, "pasangan", "jumlah", height=TOP10_CHART_H, key="top_pairs", font_size=13
                     )
 
         # ---- Kanan: Network Kata Target
