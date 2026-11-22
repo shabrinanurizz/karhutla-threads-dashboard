@@ -472,7 +472,7 @@ def render_network_graph(graph, title=None, height=None, key=None, center=None):
     fig.add_trace(go.Scatter(
         x=[pos[nd][0] for nd in nodes], y=[pos[nd][1] for nd in nodes],
         mode="markers+text", text=nodes, textposition="top center",
-        textfont={"size": 10, "color": config.COLORS["text_dark"]},
+        textfont={"size": 12, "color": config.COLORS["text_dark"]},
         marker={"size": sizes, "color": colors, "line": {"width": 0}},
         customdata=[strength[nd] for nd in nodes],
         hovertemplate="<b>%{text}</b><br>Total co-occurrence: %{customdata}<extra></extra>",
