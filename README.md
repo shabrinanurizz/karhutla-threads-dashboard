@@ -94,5 +94,3 @@ tim lainnya.
 ## Lisensi
 
 Tentukan lisensi proyek sesuai kebutuhan tim.
-
-# karhutla-threads-dashboard
